@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LocalFind — דאשבורד מנהל</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --color-primary:     #1D9E75;
+  --color-primary-light:  #E1F5EE;
+  --color-primary-dark:  #085041;
+  --color-primary-medium:  #0F6E56;
+  --color-primary-border:  #9FE1CB;
+  --purple:    #534AB7;
+  --purple-lt: #EEEDFE;
+  --purple-dk: #3C3489;
+  --amber:     #BA7517;
+  --amber-lt:  #FAEEDA;
+  --amber-dk:  #633806;
+  --red:       #A32D2D;
+  --red-lt:    #FCEBEB;
+  --red-br:    #F09595;
+  --color-background:   #F5F5F2;
+  --color-border:  rgba(0,0,0,0.09);
+  --color-text-secondary:  #6B6B67;
+  --color-placeholder: #B0AEA8;
+  --color-text-main:       #1A1A18;
+  --font-family:      'Heebo', sans-serif;
+  --border-radius-small: 8px;
+  --border-radius-large: 16px;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-background);
+  color: var(--color-text-main);
+  direction: rtl;
+  min-height: 100vh;
+}
+
+.navbar {
+  background: #fff;
+  border-bottom: 0.5px solid var(--color-border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  text-decoration: none;
+}
+
+.navbar__logo-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.navbar__admin-badge {
+  font-size: 10px;
+  background: var(--red-lt);
+  color: var(--red);
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 0.5px solid var(--red-br);
+  font-weight: 600;
+}
+
+.navbar__admin-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--amber-lt);
+  color: var(--amber-dk);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  min-height: calc(100vh - 54px);
+}
+
+.admin-sidebar {
+  background: #fff;
+  border-left: 0.5px solid var(--color-border);
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: var(--border-radius-small);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+.admin-sidebar__item--active {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.admin-sidebar__spacer { flex: 1; }
+
+.admin-sidebar__logout-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: var(--border-radius-small);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--red);
+  text-decoration: none;
+}
+
+.admin-main { padding: 20px; }
+
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.admin-stats-grid__item {
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--border-radius-large);
+  padding: 14px;
+  text-align: center;
+}
+
+.admin-stats-grid__number { font-size: 26px; font-weight: 600; }
+.admin-stats-grid__label  { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; font-weight: 500; }
+.admin-stats-grid__delta  { font-size: 10px; margin-top: 4px; font-weight: 500; }
+
+.admin-charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.admin-chart-card {
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--border-radius-large);
+  padding: 16px;
+}
+
+.admin-chart-card__title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.category-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 9px;
+}
+
+.category-bar-row:last-child { margin-bottom: 0; }
+
+.category-bar-row__label { font-size: 12px; color: var(--color-text-secondary); width: 88px; flex-shrink: 0; }
+
+.category-bar-row__track {
+  flex: 1;
+  height: 8px;
+  background: var(--color-background);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.category-bar-row__fill { height: 100%; border-radius: 4px; }
+
+.category-bar-row__percentage { font-size: 12px; font-weight: 500; width: 30px; text-align: left; }
+
+.user-distribution-bar {
+  margin-bottom: 12px;
+}
+
+.user-distribution-bar__header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.user-distribution-bar__label { color: var(--color-text-secondary); }
+.user-distribution-bar__count { font-weight: 600; }
+
+.user-distribution-bar__track {
+  height: 10px;
+  background: var(--color-background);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.user-distribution-bar__fill { height: 100%; border-radius: 4px; }
+
+.user-distribution-summary {
+  border-top: 0.5px solid var(--color-border);
+  padding-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.user-distribution-summary__label { color: var(--color-text-secondary); }
+.user-distribution-summary__value { font-weight: 600; color: var(--amber); }
+
+@media (max-width: 640px) {
+  .admin-layout { grid-template-columns: 1fr; }
+  .admin-sidebar { flex-direction: row; overflow-x: auto; border-left: none; border-bottom: 0.5px solid var(--color-border); }
+  .admin-sidebar__spacer { display: none; }
+  .admin-charts-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar__logo">
+    <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+    LocalFind
+    <span class="navbar__admin-badge">Admin</span>
+  </a>
+  <div class="navbar__admin-avatar">אד</div>
+</nav>
+
+<div class="admin-layout">
+
+  <div class="admin-sidebar">
+    <a href="#" class="admin-sidebar__item admin-sidebar__item--active"><i class="fa-solid fa-chart-bar"></i> סטטיסטיקות</a>
+    <a href="#" class="admin-sidebar__item"><i class="fa-solid fa-tag"></i> קטגוריות</a>
+    <a href="#" class="admin-sidebar__item"><i class="fa-solid fa-users"></i> משתמשים</a>
+    <div class="admin-sidebar__spacer"></div>
+    <a href="login.html" class="admin-sidebar__logout-link"><i class="fa-solid fa-right-from-bracket"></i> יציאה</a>
+  </div>
+
+  <div class="admin-main">
+
+    <div class="admin-stats-grid">
+      <div class="admin-stats-grid__item">
+        <div class="admin-stats-grid__number">248</div>
+        <div class="admin-stats-grid__label">משתמשים</div>
+        <div class="admin-stats-grid__delta" style="color:var(--color-primary);">+34 החודש</div>
+      </div>
+      <div class="admin-stats-grid__item">
+        <div class="admin-stats-grid__number">64</div>
+        <div class="admin-stats-grid__label">נותני שירות</div>
+        <div class="admin-stats-grid__delta" style="color:var(--purple);">+12 החודש</div>
+      </div>
+      <div class="admin-stats-grid__item">
+        <div class="admin-stats-grid__number">132</div>
+        <div class="admin-stats-grid__label">ביקורות</div>
+        <div class="admin-stats-grid__delta" style="color:var(--amber);">+28 החודש</div>
+      </div>
+    </div>
+
+    <div class="admin-charts-row">
+
+      <div class="admin-chart-card">
+        <div class="admin-chart-card__title">חיפושים לפי קטגוריה</div>
+        <div class="category-bar-row">
+          <span class="category-bar-row__label"><i class="fa-solid fa-screwdriver-wrench"></i> שיפוצים</span>
+          <div class="category-bar-row__track"><div class="category-bar-row__fill" style="width:82%;background:var(--color-primary);"></div></div>
+          <span class="category-bar-row__percentage">82%</span>
+        </div>
+        <div class="category-bar-row">
+          <span class="category-bar-row__label"><i class="fa-solid fa-book"></i> הוראה</span>
+          <div class="category-bar-row__track"><div class="category-bar-row__fill" style="width:54%;background:var(--purple);"></div></div>
+          <span class="category-bar-row__percentage">54%</span>
+        </div>
+        <div class="category-bar-row">
+          <span class="category-bar-row__label"><i class="fa-solid fa-dumbbell"></i> כושר</span>
+          <div class="category-bar-row__track"><div class="category-bar-row__fill" style="width:38%;background:var(--amber);"></div></div>
+          <span class="category-bar-row__percentage">38%</span>
+        </div>
+        <div class="category-bar-row">
+          <span class="category-bar-row__label"><i class="fa-solid fa-camera"></i> צילום</span>
+          <div class="category-bar-row__track"><div class="category-bar-row__fill" style="width:21%;background:#D85A30;"></div></div>
+          <span class="category-bar-row__percentage">21%</span>
+        </div>
+        <div class="category-bar-row">
+          <span class="category-bar-row__label"><i class="fa-solid fa-baby"></i> ביביסיטר</span>
+          <div class="category-bar-row__track"><div class="category-bar-row__fill" style="width:14%;background:#378ADD;"></div></div>
+          <span class="category-bar-row__percentage">14%</span>
+        </div>
+      </div>
+
+      <div class="admin-chart-card">
+        <div class="admin-chart-card__title">התפלגות משתמשים</div>
+        <div class="user-distribution-bar">
+          <div class="user-distribution-bar__header">
+            <span class="user-distribution-bar__label">מחפשי שירות</span>
+            <span class="user-distribution-bar__count">184</span>
+          </div>
+          <div class="user-distribution-bar__track">
+            <div class="user-distribution-bar__fill" style="width:74%;background:var(--purple);"></div>
+          </div>
+        </div>
+        <div class="user-distribution-bar">
+          <div class="user-distribution-bar__header">
+            <span class="user-distribution-bar__label">נותני שירות</span>
+            <span class="user-distribution-bar__count">64</span>
+          </div>
+          <div class="user-distribution-bar__track">
+            <div class="user-distribution-bar__fill" style="width:26%;background:var(--color-primary);"></div>
+          </div>
+        </div>
+        <div class="user-distribution-summary">
+          <span class="user-distribution-summary__label">דירוג ממוצע</span>
+          <span class="user-distribution-summary__value">4.7 <i class="fa-solid fa-star"></i></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

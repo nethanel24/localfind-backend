@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LocalFind — ביקורות</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --color-primary:     #1D9E75;
+  --color-primary-light:  #E1F5EE;
+  --color-primary-dark:  #085041;
+  --color-primary-medium:  #0F6E56;
+  --color-primary-border:  #9FE1CB;
+  --purple:    #534AB7;
+  --purple-lt: #EEEDFE;
+  --amber:     #BA7517;
+  --amber-lt:  #FAEEDA;
+  --amber-dk:  #633806;
+  --color-background:   #F5F5F2;
+  --color-border:  rgba(0,0,0,0.09);
+  --color-text-secondary:  #6B6B67;
+  --color-placeholder: #B0AEA8;
+  --color-text-main:       #1A1A18;
+  --font-family:      'Heebo', sans-serif;
+  --border-radius-small: 8px;
+  --border-radius-large: 16px;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-background);
+  color: var(--color-text-main);
+  direction: rtl;
+  min-height: 100vh;
+}
+
+.navbar {
+  background: #fff;
+  border-bottom: 0.5px solid var(--color-border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  text-decoration: none;
+}
+
+.navbar__logo-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.navbar__links { display: flex; align-items: center; gap: 2px; }
+
+.navbar__link {
+  padding: 6px 11px;
+  border-radius: var(--border-radius-small);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+.navbar__link--active {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.navbar__user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--purple-lt);
+  color: var(--purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.reviews-page {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  margin-bottom: 14px;
+}
+
+.provider-mini-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-primary-light);
+  border-radius: var(--border-radius-large);
+  padding: 12px;
+  margin-bottom: 14px;
+}
+
+.provider-mini-card__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--color-primary-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.provider-mini-card__name     { font-size: 14px; font-weight: 600; color: var(--color-primary-dark); }
+.provider-mini-card__category { font-size: 12px; color: var(--color-primary-medium); margin-top: 2px; }
+
+.rating-summary-card {
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--border-radius-large);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.rating-summary-card__title { font-size: 13px; font-weight: 600; margin-bottom: 14px; }
+
+.rating-summary-card__content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.rating-summary-card__score-column { text-align: center; flex-shrink: 0; }
+
+.rating-summary-card__average-number { font-size: 42px; font-weight: 700; line-height: 1; }
+.rating-summary-card__stars          { color: var(--amber); font-size: 18px; margin-top: 4px; }
+.rating-summary-card__total-count    { font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; }
+
+.rating-summary-card__bars-column { flex: 1; }
+
+.rating-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+
+.rating-bar-row:last-child { margin-bottom: 0; }
+
+.rating-bar-row__star-label { font-size: 11px; color: var(--color-text-secondary); width: 14px; }
+
+.rating-bar-row__track {
+  flex: 1;
+  height: 6px;
+  background: var(--color-background);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.rating-bar-row__fill { height: 100%; background: var(--amber); border-radius: 3px; }
+
+.rating-bar-row__percentage { font-size: 11px; color: var(--color-text-secondary); width: 28px; text-align: left; }
+
+.all-reviews-card {
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--border-radius-large);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.all-reviews-card__title { font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+
+.review-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.review-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+.review-item__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.review-item__reviewer-name { font-size: 12px; font-weight: 600; }
+.review-item__date          { font-size: 10px; color: var(--color-placeholder); margin-right: 6px; }
+.review-item__stars         { color: var(--amber); font-size: 11px; }
+.review-item__text          { font-size: 12px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.6; }
+
+.write-review-card {
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--border-radius-large);
+  padding: 16px;
+}
+
+.write-review-card__title  { font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+.write-review-card__rating-prompt { font-size: 12px; color: var(--color-text-secondary); text-align: center; margin-bottom: 8px; }
+
+.write-review-card__stars-selector {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.write-review-card__star { font-size: 30px; opacity: 0.25; }
+.write-review-card__star--selected { opacity: 1; }
+
+.write-review-card__text-input {
+  width: 100%;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--border-radius-small);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: var(--font-family);
+  background: #FAFAF8;
+  color: var(--color-text-main);
+  resize: none;
+  min-height: 80px;
+  margin-bottom: 12px;
+}
+
+.write-review-card__text-input::placeholder { color: var(--color-placeholder); }
+
+.submit-review-btn {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--border-radius-small);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar__logo">
+    <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+    LocalFind
+  </a>
+  <div class="navbar__links">
+    <a href="home.html" class="navbar__link"><i class="fa-solid fa-house"></i> בית</a>
+    <a href="favorites.html" class="navbar__link"><i class="fa-solid fa-star"></i> מועדפים</a>
+    <a href="edit-profile-user.html" class="navbar__link"><i class="fa-solid fa-user"></i> פרופיל</a>
+  </div>
+  <div class="navbar__user-avatar">יי</div>
+</nav>
+
+<div class="reviews-page">
+
+  <a href="08-provider-detail.html" class="back-link">‹ פרטי ספק</a>
+
+  <div class="provider-mini-card">
+    <div class="provider-mini-card__avatar">ד כ</div>
+    <div>
+      <div class="provider-mini-card__name">דנה כהן</div>
+      <div class="provider-mini-card__category"><i class="fa-solid fa-book"></i> מורה פרטית</div>
+    </div>
+  </div>
+
+  <div class="rating-summary-card">
+    <div class="rating-summary-card__title">סיכום דירוגים</div>
+    <div class="rating-summary-card__content">
+      <div class="rating-summary-card__score-column">
+        <div class="rating-summary-card__average-number">4.9</div>
+        <div class="rating-summary-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <div class="rating-summary-card__total-count">23 ביקורות</div>
+      </div>
+      <div class="rating-summary-card__bars-column">
+        <div class="rating-bar-row">
+          <span class="rating-bar-row__star-label">5</span>
+          <div class="rating-bar-row__track"><div class="rating-bar-row__fill" style="width:82%;"></div></div>
+          <span class="rating-bar-row__percentage">82%</span>
+        </div>
+        <div class="rating-bar-row">
+          <span class="rating-bar-row__star-label">4</span>
+          <div class="rating-bar-row__track"><div class="rating-bar-row__fill" style="width:13%;"></div></div>
+          <span class="rating-bar-row__percentage">13%</span>
+        </div>
+        <div class="rating-bar-row">
+          <span class="rating-bar-row__star-label">3</span>
+          <div class="rating-bar-row__track"><div class="rating-bar-row__fill" style="width:4%;"></div></div>
+          <span class="rating-bar-row__percentage">4%</span>
+        </div>
+        <div class="rating-bar-row">
+          <span class="rating-bar-row__star-label">2</span>
+          <div class="rating-bar-row__track"><div class="rating-bar-row__fill" style="width:1%;"></div></div>
+          <span class="rating-bar-row__percentage">1%</span>
+        </div>
+        <div class="rating-bar-row">
+          <span class="rating-bar-row__star-label">1</span>
+          <div class="rating-bar-row__track"><div class="rating-bar-row__fill" style="width:0%;"></div></div>
+          <span class="rating-bar-row__percentage">0%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="all-reviews-card">
+    <div class="all-reviews-card__title">כל הביקורות</div>
+
+    <div class="review-item">
+      <div class="review-item__avatar" style="background:var(--purple-lt);color:var(--purple);">מ ש</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;">
+          <span class="review-item__reviewer-name">מלי שמיר</span>
+          <span class="review-item__date">· ינואר 2025</span>
+          <span class="review-item__stars" style="margin-right:auto;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+        </div>
+        <div class="review-item__text">מורה מעולה! הציון של הבן שלי עלה משמעותית תוך חודשיים. מסבירה בסבלנות ומותאמת לקצב של כל תלמיד.</div>
+      </div>
+    </div>
+
+    <div class="review-item">
+      <div class="review-item__avatar" style="background:var(--amber-lt);color:var(--amber-dk);">ר א</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;">
+          <span class="review-item__reviewer-name">רון אוחיון</span>
+          <span class="review-item__date">· דצמבר 2024</span>
+          <span class="review-item__stars" style="margin-right:auto;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+        </div>
+        <div class="review-item__text">מסבירה בסבלנות, תמיד זמינה לשאלות. ממליץ בחום.</div>
+      </div>
+    </div>
+
+    <div class="review-item">
+      <div class="review-item__avatar" style="background:var(--color-primary-light);color:var(--color-primary-medium);">נ כ</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;">
+          <span class="review-item__reviewer-name">נועה כץ</span>
+          <span class="review-item__date">· נובמבר 2024</span>
+          <span class="review-item__stars" style="margin-right:auto;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+        </div>
+        <div class="review-item__text">שירות מעולה, הילדים פשוט אוהבים אותה.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="write-review-card">
+    <div class="write-review-card__title">כתוב ביקורת</div>
+    <div class="write-review-card__rating-prompt">בחר דירוג</div>
+    <div class="write-review-card__stars-selector">
+      <span class="write-review-card__star"><i class="fa-solid fa-star"></i></span>
+      <span class="write-review-card__star"><i class="fa-solid fa-star"></i></span>
+      <span class="write-review-card__star"><i class="fa-solid fa-star"></i></span>
+      <span class="write-review-card__star write-review-card__star--selected"><i class="fa-solid fa-star"></i></span>
+      <span class="write-review-card__star"><i class="fa-solid fa-star"></i></span>
+    </div>
+    <textarea class="write-review-card__text-input" placeholder="ספר על החוויה שלך..."></textarea>
+    <a href="#" class="submit-review-btn">שלח ביקורת</a>
+  </div>
+
+</div>
+
+</body>
+</html>
