@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LocalFind — מועדפים</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --color-primary:     #1D9E75;
+  --color-primary-light:  #E1F5EE;
+  --color-primary-dark:  #085041;
+  --color-primary-medium:  #0F6E56;
+  --color-primary-border:  #9FE1CB;
+  --purple:    #534AB7;
+  --purple-lt: #EEEDFE;
+  --amber:     #BA7517;
+  --amber-lt:  #FAEEDA;
+  --amber-dk:  #633806;
+  --red:       #A32D2D;
+  --red-lt:    #FCEBEB;
+  --red-br:    #F09595;
+  --color-background:   #F5F5F2;
+  --color-border:  rgba(0,0,0,0.09);
+  --color-text-secondary:  #6B6B67;
+  --color-text-main:       #1A1A18;
+  --font-family:      'Heebo', sans-serif;
+  --border-radius-small: 8px;
+  --border-radius-large: 16px;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-background);
+  color: var(--color-text-main);
+  direction: rtl;
+  min-height: 100vh;
+}
+
+.navbar {
+  background: #fff;
+  border-bottom: 0.5px solid var(--color-border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  text-decoration: none;
+}
+
+.navbar__logo-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.navbar__links { display: flex; align-items: center; gap: 2px; }
+
+.navbar__link {
+  padding: 6px 11px;
+  border-radius: var(--border-radius-small);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+.navbar__link--active {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.navbar__user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--purple-lt);
+  color: var(--purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.favorites-page {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+}
+
+.favorites-page__title { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+.favorites-page__count { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 16px; }
+
+.saved-provider-card {
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--border-radius-large);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.saved-provider-card__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.saved-provider-card__name     { font-size: 13px; font-weight: 600; }
+.saved-provider-card__category { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+.saved-provider-card__details  { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+.saved-provider-card__rating   { font-size: 11px; font-weight: 600; color: var(--amber); }
+
+.saved-provider-card__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.saved-provider-card__remove-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  background: var(--red-lt);
+  border: 0.5px solid var(--red-br);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.saved-provider-card__details-link {
+  font-size: 10px;
+  color: var(--color-primary-medium);
+  border: 0.5px solid var(--color-primary-border);
+  border-radius: 20px;
+  padding: 3px 9px;
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar__logo">
+    <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+    LocalFind
+  </a>
+  <div class="navbar__links">
+    <a href="home.html" class="navbar__link"><i class="fa-solid fa-house"></i> בית</a>
+    <a href="favorites.html" class="navbar__link navbar__link--active"><i class="fa-solid fa-star"></i> מועדפים</a>
+    <a href="edit-profile-user.html" class="navbar__link"><i class="fa-solid fa-user"></i> פרופיל</a>
+  </div>
+  <div class="navbar__user-avatar">יי</div>
+</nav>
+
+<div class="favorites-page">
+
+  <h1 class="favorites-page__title">המועדפים שלי</h1>
+  <p class="favorites-page__count">3 ספקים שמורים</p>
+
+  <div class="saved-provider-card">
+    <div class="saved-provider-card__avatar" style="background:var(--color-primary-light);color:var(--color-primary-medium);">ד כ</div>
+    <div style="flex:1;min-width:0;">
+      <div class="saved-provider-card__name">דנה כהן</div>
+      <div class="saved-provider-card__category"><i class="fa-solid fa-book"></i> מורה פרטית</div>
+      <div class="saved-provider-card__details">
+        <span class="saved-provider-card__rating"><i class="fa-solid fa-star"></i> 4.9</span>
+        · 0.8 ק"מ · 80 ₪
+      </div>
+    </div>
+    <div class="saved-provider-card__actions">
+      <a href="#" class="saved-provider-card__remove-btn"><i class="fa-solid fa-trash"></i></a>
+      <a href="08-provider-detail.html" class="saved-provider-card__details-link">פרטים</a>
+    </div>
+  </div>
+
+  <div class="saved-provider-card">
+    <div class="saved-provider-card__avatar" style="background:var(--amber-lt);color:var(--amber-dk);">י ל</div>
+    <div style="flex:1;min-width:0;">
+      <div class="saved-provider-card__name">יוסי לוי</div>
+      <div class="saved-provider-card__category"><i class="fa-solid fa-screwdriver-wrench"></i> שיפוצניק</div>
+      <div class="saved-provider-card__details">
+        <span class="saved-provider-card__rating"><i class="fa-solid fa-star"></i> 4.7</span>
+        · 1.4 ק"מ · 70 ₪
+      </div>
+    </div>
+    <div class="saved-provider-card__actions">
+      <a href="#" class="saved-provider-card__remove-btn"><i class="fa-solid fa-trash"></i></a>
+      <a href="08-provider-detail.html" class="saved-provider-card__details-link">פרטים</a>
+    </div>
+  </div>
+
+  <div class="saved-provider-card">
+    <div class="saved-provider-card__avatar" style="background:var(--purple-lt);color:var(--purple);">מ א</div>
+    <div style="flex:1;min-width:0;">
+      <div class="saved-provider-card__name">מיכל אברהם</div>
+      <div class="saved-provider-card__category"><i class="fa-solid fa-camera"></i> צלמת</div>
+      <div class="saved-provider-card__details">
+        <span class="saved-provider-card__rating"><i class="fa-solid fa-star"></i> 4.8</span>
+        · 2.1 ק"מ · 75 ₪
+      </div>
+    </div>
+    <div class="saved-provider-card__actions">
+      <a href="#" class="saved-provider-card__remove-btn"><i class="fa-solid fa-trash"></i></a>
+      <a href="08-provider-detail.html" class="saved-provider-card__details-link">פרטים</a>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

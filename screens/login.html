@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LocalFind — התחברות</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --color-primary:     #1D9E75;
+  --color-primary-light:  #E1F5EE;
+  --color-primary-dark:  #085041;
+  --color-primary-medium:  #0F6E56;
+  --color-primary-border:  #9FE1CB;
+  --red:       #A32D2D;
+  --red-lt:    #FCEBEB;
+  --red-br:    #F09595;
+  --color-background:   #F5F5F2;
+  --color-border:  rgba(0,0,0,0.09);
+  --color-text-secondary:  #6B6B67;
+  --color-placeholder: #B0AEA8;
+  --color-text-main:       #1A1A18;
+  --font-family:      'Heebo', sans-serif;
+  --border-radius-small: 8px;
+  --border-radius-large: 16px;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-background);
+  color: var(--color-text-main);
+  direction: rtl;
+  min-height: 100vh;
+}
+
+.navbar {
+  background: #fff;
+  border-bottom: 0.5px solid var(--color-border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  text-decoration: none;
+}
+
+.navbar__logo-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.navbar__actions { display: flex; gap: 8px; }
+
+.navbar__login-link {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  border: 0.5px solid var(--color-border);
+  border-radius: 20px;
+  background: none;
+  text-decoration: none;
+}
+
+.navbar__register-link {
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-primary);
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+.login-page {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 40px 16px 32px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.login-header__logo-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  margin: 0 auto 12px;
+}
+
+.login-header__title { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.login-header__subtitle { font-size: 13px; color: var(--color-text-secondary); }
+
+.login-error-alert {
+  background: var(--red-lt);
+  border: 0.5px solid var(--red-br);
+  border-radius: var(--border-radius-small);
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
+.login-error-alert__message {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.login-error-alert__footer {
+  border-top: 0.5px solid var(--red-br);
+  padding-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-error-alert__hint { font-size: 11px; color: #791F1F; }
+
+.login-error-alert__register-link {
+  font-size: 11px;
+  color: var(--color-primary-medium);
+  border: 0.5px solid var(--color-primary-border);
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-form {
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--border-radius-large);
+  padding: 18px;
+}
+
+.login-form__field { margin-bottom: 14px; }
+
+.login-form__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: 5px;
+}
+
+.login-form__input {
+  width: 100%;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--border-radius-small);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: var(--font-family);
+  background: #FAFAF8;
+  color: var(--color-text-main);
+}
+
+.login-form__input::placeholder { color: var(--color-placeholder); }
+.login-form__input--email { direction: ltr; text-align: right; }
+
+.login-btn {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--border-radius-small);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 6px;
+}
+
+.register-redirect {
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-top: 14px;
+}
+
+.register-redirect__link {
+  color: var(--color-primary-medium);
+  font-weight: 600;
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar__logo">
+    <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+    LocalFind
+  </a>
+  <div class="navbar__actions">
+    <a href="login.html" class="navbar__login-link">התחבר</a>
+    <a href="register.html" class="navbar__register-link">הרשמה</a>
+  </div>
+</nav>
+
+<div class="login-page">
+
+  <div class="login-header">
+    <div class="login-header__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+    <h1 class="login-header__title">LocalFind</h1>
+    <p class="login-header__subtitle">התחבר לחשבון שלך</p>
+  </div>
+
+  <div class="login-error-alert">
+    <div class="login-error-alert__message"><i class="fa-solid fa-circle-xmark"></i> פרטי ההתחברות שגויים</div>
+    <div class="login-error-alert__footer">
+      <span class="login-error-alert__hint">עדיין לא רשום?</span>
+      <a href="register.html" class="login-error-alert__register-link">הרשמה</a>
+    </div>
+  </div>
+
+  <div class="login-form">
+
+    <div class="login-form__field">
+      <label class="login-form__label">אימייל</label>
+      <input class="login-form__input login-form__input--email" type="email" placeholder="Email"/>
+    </div>
+
+    <div class="login-form__field" style="margin-bottom: 20px;">
+      <label class="login-form__label">סיסמה</label>
+      <input class="login-form__input" type="password" placeholder="Password"/>
+    </div>
+
+    <a href="home.html" class="login-btn">התחבר</a>
+
+  </div>
+
+  <p class="register-redirect">
+    לא רשום עדיין? <a href="register.html" class="register-redirect__link">הרשמה</a>
+  </p>
+
+</div>
+
+</body>
+</html>
