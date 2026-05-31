@@ -4,197 +4,60 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>LocalFind — הרשמה</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --color-primary:     #1D9E75;
-  --color-primary-light:  #E1F5EE;
-  --color-primary-dark:  #085041;
-  --color-primary-medium:  #0F6E56;
-  --color-primary-border:  #9FE1CB;
-  --color-background:   #F5F5F2;
-  --color-border:  rgba(0,0,0,0.09);
-  --color-text-secondary:  #6B6B67;
+  --color-primary: #1D9E75;
+  --color-primary-light: #E1F5EE;
+  --color-primary-dark: #085041;
+  --color-primary-medium: #0F6E56;
+  --color-primary-border: #9FE1CB;
+  --color-background: #F5F5F2;
+  --color-border: rgba(0,0,0,0.09);
+  --color-text-secondary: #6B6B67;
   --color-placeholder: #B0AEA8;
-  --color-text-main:       #1A1A18;
-  --font-family:      'Heebo', sans-serif;
+  --color-text-main: #1A1A18;
+  --font-family: 'Rubik', sans-serif;
+  --font-family-en: 'Inter', sans-serif;
   --border-radius-small: 8px;
   --border-radius-large: 16px;
 }
+body { font-family: var(--font-family); background: var(--color-background); color: var(--color-text-main); direction: rtl; min-height: 100vh; }
 
-body {
-  font-family: var(--font-family);
-  background: var(--color-background);
-  color: var(--color-text-main);
-  direction: rtl;
-  min-height: 100vh;
-}
+.navbar { background: #fff; border-bottom: 0.5px solid var(--color-border); padding: 12px 20px; display: flex; align-items: center; justify-content: center; }
+.navbar__logo { display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 700; color: var(--color-text-main); text-decoration: none; }
+.navbar__logo-icon { width: 30px; height: 30px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 15px; }
 
-.navbar {
-  background: #fff;
-  border-bottom: 0.5px solid var(--color-border);
-  padding: 12px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+.page { max-width: 420px; margin: 0 auto; padding: 32px 16px; }
 
-.navbar__logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-text-main);
-  text-decoration: none;
-}
+.page-title { font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 6px; }
+.page-sub { font-size: 14px; color: var(--color-text-secondary); text-align: center; margin-bottom: 24px; }
 
-.navbar__logo-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-}
+.form-card { background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-large); padding: 20px; }
+.field { margin-bottom: 16px; }
+.field__label { display: block; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 5px; }
+.field__input { width: 100%; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-small); padding: 11px 14px; font-size: 15px; font-family: var(--font-family); background: #FAFAF8; color: var(--color-text-main); }
+.field__input::placeholder { color: var(--color-placeholder); }
+.field__input--ltr { direction: ltr; text-align: right; }
 
-.navbar__actions { display: flex; gap: 8px; }
+.role-label { display: block; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 8px; }
+.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+.role-option { border-radius: var(--border-radius-small); padding: 14px 10px; text-align: center; cursor: pointer; }
+.role-option--selected { border: 2px solid var(--color-primary); background: var(--color-primary-light); }
+.role-option--unselected { border: 0.5px solid var(--color-border); background: #FAFAF8; }
+.role-option__icon { font-size: 22px; margin-bottom: 6px; }
+.role-option__label { font-size: 13px; font-weight: 600; }
+.role-option--selected .role-option__label { color: var(--color-primary-dark); }
+.role-option--unselected .role-option__label { color: var(--color-text-secondary); }
 
-.navbar__login-link {
-  padding: 6px 14px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  border: 0.5px solid var(--color-border);
-  border-radius: 20px;
-  background: none;
-  text-decoration: none;
-}
+.submit-btn { display: block; width: 100%; padding: 13px; background: var(--color-primary); color: #fff; border-radius: var(--border-radius-small); font-size: 16px; font-weight: 600; text-align: center; text-decoration: none; }
 
-.navbar__register-link {
-  padding: 6px 14px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
-  background: var(--color-primary);
-  border-radius: 20px;
-  text-decoration: none;
-}
+.login-link { text-align: center; font-size: 14px; color: var(--color-text-secondary); margin-top: 16px; }
+.login-link a { color: var(--color-primary-medium); font-weight: 600; text-decoration: none; }
 
-.register-page {
-  max-width: 440px;
-  margin: 0 auto;
-  padding: 40px 16px 32px;
-}
-
-.register-header {
-  text-align: center;
-  margin-bottom: 28px;
-}
-
-.register-header__logo-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  margin: 0 auto 12px;
-}
-
-.register-header__title { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
-.register-header__subtitle { font-size: 13px; color: var(--color-text-secondary); }
-
-.register-form {
-  background: #fff;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-large);
-  padding: 18px;
-}
-
-.register-form__field { margin-bottom: 14px; }
-
-.register-form__label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  margin-bottom: 5px;
-}
-
-.register-form__input {
-  width: 100%;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-small);
-  padding: 10px 12px;
-  font-size: 13px;
-  font-family: var(--font-family);
-  background: #FAFAF8;
-  color: var(--color-text-main);
-}
-
-.register-form__input::placeholder { color: var(--color-placeholder); }
-.register-form__input--email { direction: ltr; text-align: right; }
-
-.role-selector {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 18px;
-}
-
-.role-selector__option {
-  border-radius: var(--border-radius-small);
-  padding: 10px 8px;
-  text-align: center;
-}
-
-.role-selector__option--selected {
-  border: 2px solid var(--color-primary);
-  background: var(--color-primary-light);
-}
-
-.role-selector__option--unselected {
-  border: 0.5px solid var(--color-border);
-  background: #FAFAF8;
-}
-
-.role-selector__icon { font-size: 20px; margin-bottom: 4px; }
-.role-selector__label--selected { font-size: 12px; font-weight: 600; color: var(--color-primary-dark); }
-.role-selector__label--unselected { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); }
-
-.register-btn {
-  display: block;
-  width: 100%;
-  padding: 11px;
-  background: var(--color-primary);
-  color: #fff;
-  border-radius: var(--border-radius-small);
-  font-size: 14px;
-  font-weight: 600;
-  text-align: center;
-  text-decoration: none;
-}
-
-.login-redirect {
-  text-align: center;
-  font-size: 13px;
-  color: var(--color-text-secondary);
-  margin-top: 14px;
-}
-
-.login-redirect__link {
-  color: var(--color-primary-medium);
-  font-weight: 600;
-  text-decoration: none;
-}
+@media (max-width: 640px) { .page { padding: 20px 12px; } }
 </style>
 </head>
 <body>
@@ -204,59 +67,42 @@ body {
     <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
     LocalFind
   </a>
-  <div class="navbar__actions">
-    <a href="login.html" class="navbar__login-link">התחבר</a>
-    <a href="register.html" class="navbar__register-link">הרשמה</a>
-  </div>
 </nav>
 
-<div class="register-page">
+<div class="page">
+  <div class="page-title">הצטרף ל-LocalFind</div>
+  <div class="page-sub">חיבור בין אנשים לשירותים בקרבת מקום</div>
 
-  <div class="register-header">
-    <div class="register-header__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
-    <h1 class="register-header__title">LocalFind</h1>
-    <p class="register-header__subtitle">צור חשבון חדש</p>
-  </div>
-
-  <div class="register-form">
-
-    <div class="register-form__field">
-      <label class="register-form__label">שם מלא</label>
-      <input class="register-form__input" type="text" placeholder="Full name"/>
+  <div class="form-card">
+    <div class="field">
+      <label class="field__label">שם מלא</label>
+      <input class="field__input" type="text" placeholder="Full name"/>
+    </div>
+    <div class="field">
+      <label class="field__label">אימייל</label>
+      <input class="field__input field__input--ltr" type="email" placeholder="Email"/>
+    </div>
+    <div class="field" style="margin-bottom:20px;">
+      <label class="field__label">סיסמה</label>
+      <input class="field__input" type="password" placeholder="Password"/>
     </div>
 
-    <div class="register-form__field">
-      <label class="register-form__label">אימייל</label>
-      <input class="register-form__input register-form__input--email" type="email" placeholder="Email"/>
-    </div>
-
-    <div class="register-form__field">
-      <label class="register-form__label">סיסמה</label>
-      <input class="register-form__input" type="password" placeholder="Password"/>
-    </div>
-
-    <div class="register-form__field">
-      <label class="register-form__label" style="margin-bottom:8px;">אני נרשם כ</label>
-      <div class="role-selector">
-        <div class="role-selector__option role-selector__option--selected">
-          <div class="role-selector__icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-          <div class="role-selector__label--selected">מחפש שירות</div>
-        </div>
-        <div class="role-selector__option role-selector__option--unselected">
-          <div class="role-selector__icon"><i class="fa-solid fa-briefcase"></i></div>
-          <div class="role-selector__label--unselected">נותן שירות</div>
-        </div>
+    <span class="role-label">אני מצטרף כ</span>
+    <div class="role-grid">
+      <div class="role-option role-option--selected">
+        <div class="role-option__icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <div class="role-option__label">מחפש שירות</div>
+      </div>
+      <div class="role-option role-option--unselected">
+        <div class="role-option__icon"><i class="fa-solid fa-briefcase"></i></div>
+        <div class="role-option__label">נותן שירות</div>
       </div>
     </div>
 
-    <a href="feed.html" class="register-btn">הרשמה</a>
-
+    <a href="feed.html" class="submit-btn">הרשמה</a>
   </div>
 
-  <p class="login-redirect">
-    כבר רשום? <a href="login.html" class="login-redirect__link">התחבר</a>
-  </p>
-
+  <p class="login-link">כבר רשום? <a href="login.html">התחבר</a></p>
 </div>
 
 </body>

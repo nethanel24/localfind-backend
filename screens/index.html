@@ -3,402 +3,58 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LocalFind — מצא בעלי מקצוע קרובים אליך</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<title>LocalFind</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --color-primary:        #1D9E75;
-  --color-primary-light:  #E1F5EE;
-  --color-primary-dark:   #085041;
+  --color-primary: #1D9E75;
+  --color-primary-light: #E1F5EE;
+  --color-primary-dark: #085041;
   --color-primary-medium: #0F6E56;
   --color-primary-border: #9FE1CB;
-  --color-background:     #F5F5F2;
-  --color-border:         rgba(0,0,0,0.09);
+  --color-background: #F5F5F2;
+  --color-border: rgba(0,0,0,0.09);
   --color-text-secondary: #6B6B67;
-  --color-placeholder:    #B0AEA8;
-  --color-text-main:      #1A1A18;
-  --font-family:          'Heebo', sans-serif;
-  --border-radius-small:  8px;
-  --border-radius-large:  16px;
+  --color-text-main: #1A1A18;
+  --font-family: 'Rubik', sans-serif;
+  --font-family-en: 'Inter', sans-serif;
+  --border-radius-small: 8px;
+  --border-radius-large: 16px;
 }
-
-body {
-  font-family: var(--font-family);
-  background: var(--color-background);
-  color: var(--color-text-main);
-  direction: rtl;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* NAVBAR */
-.navbar {
-  background: #fff;
-  border-bottom: 0.5px solid var(--color-border);
-  padding: 12px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.navbar__logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--color-text-main);
-  text-decoration: none;
-}
-
-.navbar__logo-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-primary);
-  font-size: 14px;
-}
-
-.navbar__actions { display: flex; gap: 8px; }
-
-.navbar__login-btn {
-  padding: 7px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  border: 0.5px solid var(--color-border);
-  border-radius: 20px;
-  background: none;
-  text-decoration: none;
-  font-family: var(--font-family);
-}
-
-.navbar__register-btn {
-  padding: 7px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #fff;
-  background: var(--color-primary);
-  border-radius: 20px;
-  text-decoration: none;
-}
-
-/* HERO */
-.hero {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 60px 20px 40px;
-}
-
-.hero__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  border: 0.5px solid var(--color-primary-border);
-  border-radius: 20px;
-  padding: 5px 14px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.hero__title {
-  font-size: 36px;
-  font-weight: 700;
-  color: var(--color-text-main);
-  line-height: 1.3;
-  margin-bottom: 14px;
-  max-width: 480px;
-}
-
-.hero__title span {
-  color: var(--color-primary);
-}
-
-.hero__subtitle {
-  font-size: 15px;
-  color: var(--color-text-secondary);
-  line-height: 1.7;
-  margin-bottom: 32px;
-  max-width: 400px;
-}
-
-.hero__actions {
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-  justify-content: center;
-  margin-bottom: 32px;
-}
-
-.hero__btn-primary {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 13px 28px;
-  background: var(--color-primary);
-  color: #fff;
-  border-radius: var(--border-radius-small);
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-  font-family: var(--font-family);
-}
-
-.hero__login-link {
-  font-size: 13px;
-  color: var(--color-text-secondary);
-  margin-top: 12px;
-}
-
-.hero__login-link a {
-  color: var(--color-primary-medium);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.hero__btn-secondary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 13px 28px;
-  background: var(--color-primary);
-  color: #fff;
-  border-radius: var(--border-radius-small);
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-  font-family: var(--font-family);
-}
-
-/* STATS */
-.hero__stats {
-  display: flex;
-  gap: 32px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.hero__stat-item {
-  text-align: center;
-}
-
-.hero__stat-number {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--color-primary);
-}
-
-.hero__stat-label {
-  font-size: 12px;
-  color: var(--color-text-secondary);
-  margin-top: 2px;
-}
-
-/* CATEGORIES */
-.categories-section {
-  padding: 40px 20px;
-  max-width: 600px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.categories-section__title {
-  font-size: 18px;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.category-card {
-  background: #fff;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-large);
-  padding: 16px 10px;
-  text-align: center;
-  text-decoration: none;
-  color: var(--color-text-main);
-}
-
-.category-card__icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: var(--color-primary-light);
-  color: var(--color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  margin: 0 auto 8px;
-}
-
-.category-card__name {
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.category-card__count {
-  font-size: 11px;
-  color: var(--color-text-secondary);
-  margin-top: 2px;
-}
-
-/* HOW IT WORKS */
-.how-section {
-  background: #fff;
-  border-top: 0.5px solid var(--color-border);
-  padding: 40px 20px;
-}
-
-.how-section__title {
-  font-size: 18px;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-.how-steps {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.how-step {
-  flex: 1;
-  min-width: 140px;
-  text-align: center;
-}
-
-.how-step__number {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--color-primary);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 700;
-  margin: 0 auto 10px;
-}
-
-.how-step__title {
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.how-step__desc {
-  font-size: 11px;
-  color: var(--color-text-secondary);
-  line-height: 1.6;
-}
-
-/* FOOTER */
-.footer {
-  background: #fff;
-  border-top: 0.5px solid var(--color-border);
-  padding: 16px 24px;
-  text-align: center;
-  font-size: 12px;
-  color: var(--color-text-secondary);
-}
+body { font-family: var(--font-family); background: var(--color-background); color: var(--color-text-main); direction: rtl; min-height: 100vh; display: flex; flex-direction: column; }
+.navbar { background: #fff; border-bottom: 0.5px solid var(--color-border); padding: 14px 20px; display: flex; align-items: center; justify-content: center; }
+.navbar__logo { display: flex; align-items: center; gap: 8px; font-size: 19px; font-weight: 700; color: var(--color-text-main); text-decoration: none; }
+.navbar__logo-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 16px; }
+.hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 48px 20px 32px; }
+.hero__badge { display: inline-flex; align-items: center; gap: 6px; background: var(--color-primary-light); color: var(--color-primary-dark); border: 0.5px solid var(--color-primary-border); border-radius: 20px; padding: 5px 14px; font-size: 13px; font-weight: 600; margin-bottom: 20px; }
+.hero__title { font-size: 34px; font-weight: 700; line-height: 1.3; margin-bottom: 12px; max-width: 420px; }
+.hero__title span { color: var(--color-primary); }
+.hero__subtitle { font-size: 15px; color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 32px; max-width: 360px; }
+.hero__actions { display: flex; gap: 12px; justify-content: center; }
+.btn-primary { padding: 13px 28px; background: var(--color-primary); color: #fff; border-radius: var(--border-radius-small); font-size: 16px; font-weight: 600; text-decoration: none; font-family: var(--font-family); }
+.btn-secondary { padding: 13px 28px; background: #fff; color: var(--color-text-main); border: 0.5px solid var(--color-border); border-radius: var(--border-radius-small); font-size: 16px; font-weight: 500; text-decoration: none; font-family: var(--font-family); }
+.footer { padding: 16px; text-align: center; font-size: 13px; color: var(--color-text-secondary); }
+@media (max-width: 640px) { .hero { padding: 32px 16px; } .hero__title { font-size: 26px; } .hero__actions { flex-direction: column; align-items: center; } }
 </style>
 </head>
 <body>
-
-<!-- NAVBAR -->
 <nav class="navbar">
   <a href="index.html" class="navbar__logo">
-    <div class="navbar__logo-icon">
-      <i class="fa-solid fa-location-dot"></i>
-    </div>
+    <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
     LocalFind
   </a>
-
 </nav>
-
-<!-- HERO -->
 <section class="hero">
-  <div class="hero__badge">
-    <i class="fa-solid fa-location-dot"></i>
-    בעלי מקצוע קרובים אליך
-  </div>
-
-  <h1 class="hero__title">
-    מצא את <span>בעל המקצוע</span><br/>המושלם לכל עבודה
-  </h1>
-
-  <p class="hero__subtitle">
-    LocalFind מחבר בינך לבין בעלי מקצוע מוכשרים באזורך — שיפוצנים, מורים, צלמים ועוד
-  </p>
-
+  <div class="hero__badge"><i class="fa-solid fa-location-dot"></i> שירותים קרובים אליך</div>
+  <h1 class="hero__title">מצא <span>בעל מקצוע</span> קרוב אליך — עכשיו</h1>
+  <p class="hero__subtitle">כתוב מה אתה צריך ותוך שניות תקבל רשימה של אנשים זמינים קרוב אליך</p>
   <div class="hero__actions">
-    <a href="register.html" class="hero__btn-primary">הירשם</a>
-    <a href="login.html" class="hero__btn-secondary">התחבר</a>
+    <a href="register.html" class="btn-primary">הירשם</a>
+    <a href="login.html" class="btn-secondary">התחבר</a>
   </div>
 </section>
-
-<!-- CATEGORIES -->
-<section class="categories-section">
-  <h2 class="categories-section__title">קטגוריות פופולריות</h2>
-  <div class="categories-grid">
-    <div class="category-card">
-      <div class="category-card__icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
-      <div class="category-card__name">שיפוצים</div>
-    </div>
-    <div class="category-card">
-      <div class="category-card__icon"><i class="fa-solid fa-book"></i></div>
-      <div class="category-card__name">הוראה</div>
-    </div>
-    <div class="category-card">
-      <div class="category-card__icon"><i class="fa-solid fa-dumbbell"></i></div>
-      <div class="category-card__name">כושר</div>
-    </div>
-    <div class="category-card">
-      <div class="category-card__icon"><i class="fa-solid fa-camera"></i></div>
-      <div class="category-card__name">צילום</div>
-    </div>
-    <div class="category-card">
-      <div class="category-card__icon"><i class="fa-solid fa-broom"></i></div>
-      <div class="category-card__name">ניקיון</div>
-    </div>
-    <div class="category-card">
-      <div class="category-card__icon"><i class="fa-solid fa-baby"></i></div>
-      <div class="category-card__name">ביביסיטר</div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  © 2025 LocalFind · כל הזכויות שמורות
-</footer>
-
+<footer class="footer">© 2025 LocalFind</footer>
 </body>
 </html>

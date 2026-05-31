@@ -3,380 +3,138 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LocalFind — חיפוש ספקים</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<title>LocalFind — חיפוש</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --color-primary:        #1D9E75;
-  --color-primary-light:  #E1F5EE;
-  --color-primary-dark:   #085041;
+  --color-primary: #1D9E75;
+  --color-primary-light: #E1F5EE;
+  --color-primary-dark: #085041;
   --color-primary-medium: #0F6E56;
   --color-primary-border: #9FE1CB;
-  --purple:               #534AB7;
-  --purple-lt:            #EEEDFE;
-  --amber:                #BA7517;
-  --amber-lt:             #FAEEDA;
-  --amber-dk:             #633806;
-  --color-background:     #F5F5F2;
-  --color-border:         rgba(0,0,0,0.09);
+  --amber: #BA7517;
+  --amber-lt: #FAEEDA;
+  --amber-dk: #633806;
+  --purple-lt: #EEEDFE;
+  --purple: #534AB7;
+  --color-background: #F5F5F2;
+  --color-border: rgba(0,0,0,0.09);
   --color-text-secondary: #6B6B67;
-  --color-placeholder:    #B0AEA8;
-  --color-text-main:      #1A1A18;
-  --font-family:          'Heebo', sans-serif;
-  --border-radius-small:  8px;
-  --border-radius-large:  16px;
+  --color-placeholder: #B0AEA8;
+  --color-text-main: #1A1A18;
+  --font-family: 'Rubik', sans-serif;
+  --font-family-en: 'Inter', sans-serif;
+  --border-radius-small: 8px;
+  --border-radius-large: 16px;
 }
+body { font-family: var(--font-family); background: var(--color-background); color: var(--color-text-main); direction: rtl; min-height: 100vh; }
 
-body {
-  font-family: var(--font-family);
-  background: var(--color-background);
-  color: var(--color-text-main);
-  direction: rtl;
-  min-height: 100vh;
+.navbar { background: #fff; border-bottom: 0.5px solid var(--color-border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+.navbar__logo { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: var(--color-text-main); text-decoration: none; }
+.navbar__logo-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 14px; }
+.navbar__links { display: flex; gap: 2px; }
+.navbar__link { padding: 6px 10px; border-radius: var(--border-radius-small); font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-decoration: none; }
+.navbar__link--active { background: var(--color-primary-light); color: var(--color-primary-dark); font-weight: 600; }
+.navbar__avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--purple-lt); color: var(--purple); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
+
+.page { max-width: 520px; margin: 0 auto; padding: 16px; }
+
+.search-wrap { margin-bottom: 20px; }
+.search-wrap__label { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+.search-wrap__sub { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 12px; }
+.search-row { display: flex; gap: 8px; }
+.search-input { flex: 1; border: 1.5px solid var(--color-primary-border); border-radius: var(--border-radius-large); padding: 12px 16px; font-size: 15px; font-family: var(--font-family); background: #fff; color: var(--color-text-main); direction: rtl; }
+.search-input::placeholder { color: var(--color-placeholder); }
+.search-btn { padding: 0 20px; background: var(--color-primary); color: #fff; border: none; border-radius: var(--border-radius-large); font-size: 15px; font-weight: 600; font-family: var(--font-family); cursor: pointer; }
+
+.results-label { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 10px; }
+
+.provider-card { background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-large); padding: 14px; display: flex; align-items: center; gap: 12px; margin-bottom: 10px; text-decoration: none; color: inherit; }
+.provider-card__avatar { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; flex-shrink: 0; }
+.provider-card__name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+.provider-card__meta { font-size: 13px; color: var(--color-text-secondary); }
+.provider-card__rating { font-size: 13px; font-weight: 600; color: var(--amber); white-space: nowrap; margin-right: auto; }
+.provider-card__actions { display: flex; gap: 6px; flex-shrink: 0; }
+.provider-card__wa { width: 36px; height: 36px; border-radius: 50%; background: #25D366; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 17px; text-decoration: none; }
+.provider-card__tel { width: 36px; height: 36px; border-radius: 50%; background: var(--color-primary-light); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 16px; text-decoration: none; }
+.provider-card__fav { width: 36px; height: 36px; border-radius: 50%; background: #FAEEDA; color: #BA7517; display: flex; align-items: center; justify-content: center; font-size: 15px; text-decoration: none; }
+
+@media (max-width: 640px) {
+  .navbar { padding: 10px 12px; }
+  .navbar__link { padding: 5px 7px; font-size: 11px; }
+  .page { padding: 12px; }
+  .search-wrap__label { font-size: 17px; }
 }
-
-/* NAVBAR */
-.navbar {
-  background: #fff;
-  border-bottom: 0.5px solid var(--color-border);
-  padding: 12px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-.navbar__logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-text-main);
-  text-decoration: none;
-}
-
-.navbar__logo-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-primary);
-  font-size: 14px;
-}
-
-.navbar__links { display: flex; align-items: center; gap: 2px; }
-
-.navbar__link {
-  padding: 6px 11px;
-  border-radius: var(--border-radius-small);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.navbar__link--active {
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  font-weight: 600;
-}
-
-.navbar__user-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--purple-lt);
-  color: var(--purple);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 600;
-}
-
-/* PAGE */
-.feed-page {
-  max-width: 520px;
-  margin: 0 auto;
-  padding: 16px;
-}
-
-/* WELCOME BANNER */
-.welcome-banner {
-  background: var(--color-primary-light);
-  border-radius: var(--border-radius-large);
-  padding: 14px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.welcome-banner__avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #fff;
-  color: var(--color-primary-medium);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.welcome-banner__greeting { font-size: 15px; font-weight: 600; color: var(--color-primary-dark); }
-.welcome-banner__subtitle { font-size: 12px; color: var(--color-primary-medium); margin-top: 2px; }
-
-/* SEARCH BOX */
-.search-box {
-  background: #fff;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-large);
-  padding: 14px;
-  margin-bottom: 12px;
-}
-
-.search-box__header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-
-.search-box__title { font-size: 13px; font-weight: 600; }
-
-.search-box__badge {
-  font-size: 10px;
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  padding: 2px 8px;
-  border-radius: 20px;
-  border: 0.5px solid var(--color-primary-border);
-  font-weight: 600;
-}
-
-.search-box__input-row {
-  display: flex;
-  gap: 8px;
-}
-
-.search-box__input {
-  flex: 1;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-small);
-  padding: 9px 12px;
-  font-size: 13px;
-  font-family: var(--font-family);
-  background: #FAFAF8;
-  color: var(--color-text-main);
-  direction: rtl;
-}
-
-.search-box__input::placeholder { color: var(--color-placeholder); }
-
-.search-box__btn {
-  padding: 0 16px;
-  background: var(--color-primary);
-  color: #fff;
-  border: none;
-  border-radius: var(--border-radius-small);
-  font-size: 13px;
-  font-weight: 600;
-  font-family: var(--font-family);
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-/* SECTION LABEL */
-.section-label {
-  font-size: 11px;
-  color: var(--color-text-secondary);
-  font-weight: 500;
-  margin-bottom: 8px;
-}
-
-/* CATEGORY FILTER */
-.category-filter {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 14px;
-}
-
-.category-filter__pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.category-filter__pill--selected {
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  border: 0.5px solid var(--color-primary-border);
-}
-
-.category-filter__pill--unselected {
-  background: #fff;
-  color: var(--color-text-secondary);
-  border: 0.5px solid var(--color-border);
-}
-
-/* PROVIDER CARD */
-.provider-card {
-  background: #fff;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-large);
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-  text-decoration: none;
-  color: inherit;
-}
-
-.provider-card__avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.provider-card__name     { font-size: 13px; font-weight: 600; }
-.provider-card__category { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
-.provider-card__details  { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
-.provider-card__rating   { font-size: 12px; font-weight: 600; color: var(--amber); white-space: nowrap; }
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <a href="index.html" class="navbar__logo">
-    <div class="navbar__logo-icon">
-      <i class="fa-solid fa-location-dot"></i>
-    </div>
+    <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
     LocalFind
   </a>
   <div class="navbar__links">
-    <a href="feed.html" class="navbar__link navbar__link--active">
-      <i class="fa-solid fa-house"></i> בית
-    </a>
-    <a href="favorites.html" class="navbar__link">
-      <i class="fa-solid fa-star"></i> מועדפים
-    </a>
-    <a href="edit_profile_user.html" class="navbar__link">
-      <i class="fa-solid fa-user"></i> פרופיל
-    </a>
+    <a href="feed.html" class="navbar__link navbar__link--active"><i class="fa-solid fa-house"></i> בית</a>
+    <a href="edit_profile_user.html" class="navbar__link"><i class="fa-solid fa-user"></i> פרופיל</a>
   </div>
-  <div class="navbar__user-avatar">יי</div>
+  <div class="navbar__avatar">יי</div>
 </nav>
 
-<!-- PAGE -->
-<div class="feed-page">
-
-  <!-- WELCOME -->
-  <div class="welcome-banner">
-    <div class="welcome-banner__avatar">יי</div>
-    <div>
-      <div class="welcome-banner__greeting">שלום, ישראל <i class="fa-solid fa-hand-wave"></i></div>
-      <div class="welcome-banner__subtitle">מה אתה מחפש היום?</div>
+<div class="page">
+  <div class="search-wrap">
+    <div class="search-wrap__label">מה אתה צריך?</div>
+    <div class="search-wrap__sub">כתוב בחופשיות — נמצא מישהו קרוב אליך</div>
+    <div class="search-row">
+      <input class="search-input" type="text" placeholder="למשל: מורה למתמטיקה, שיפוצניק..."/>
+      <button class="search-btn">חפש</button>
     </div>
   </div>
 
-  <!-- SEARCH -->
-  <div class="search-box">
-    <div class="search-box__header">
-      <i class="fa-solid fa-wand-magic-sparkles"></i>
-      <span class="search-box__title">חיפוש חכם</span>
-      <span class="search-box__badge">AI</span>
-    </div>
-    <div class="search-box__input-row">
-      <input class="search-box__input" type="text" placeholder="תאר את השירות שאתה מחפש..."/>
-      <button class="search-box__btn">חפש</button>
-    </div>
-  </div>
-
-  <!-- CATEGORIES -->
-  <div class="section-label">קטגוריות</div>
-  <div class="category-filter">
-    <span class="category-filter__pill category-filter__pill--selected">
-      <i class="fa-solid fa-screwdriver-wrench"></i> שיפוצים
-    </span>
-    <span class="category-filter__pill category-filter__pill--unselected">
-      <i class="fa-solid fa-book"></i> הוראה
-    </span>
-    <span class="category-filter__pill category-filter__pill--unselected">
-      <i class="fa-solid fa-dumbbell"></i> כושר
-    </span>
-    <span class="category-filter__pill category-filter__pill--unselected">
-      <i class="fa-solid fa-camera"></i> צילום
-    </span>
-    <span class="category-filter__pill category-filter__pill--unselected">
-      <i class="fa-solid fa-broom"></i> ניקיון
-    </span>
-    <span class="category-filter__pill category-filter__pill--unselected">
-      <i class="fa-solid fa-baby"></i> ביביסיטר
-    </span>
-  </div>
-
-  <!-- RESULTS -->
-  <div class="section-label">קרובים אליך</div>
+  <div class="results-label">3 נמצאו קרוב אליך</div>
 
   <a href="provider_details.html" class="provider-card">
     <div class="provider-card__avatar" style="background:var(--color-primary-light);color:var(--color-primary-medium);">ד כ</div>
-    <div style="flex:1;">
+    <div style="flex:1;min-width:0;">
       <div class="provider-card__name">דנה כהן</div>
-      <div class="provider-card__category"><i class="fa-solid fa-book"></i> מורה פרטית</div>
-      <div class="provider-card__details">0.8 ק"מ · 80 ₪</div>
+      <div class="provider-card__meta"><i class="fa-solid fa-book"></i> מורה פרטית · 0.8 ק"מ · 80₪</div>
     </div>
     <div class="provider-card__rating"><i class="fa-solid fa-star"></i> 4.9</div>
+    <div class="provider-card__actions">
+      <a href="https://wa.me/972500000000" class="provider-card__wa"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:0500000000" class="provider-card__tel"><i class="fa-solid fa-phone"></i></a>
+      <a href="favorites.html" class="provider-card__fav"><i class="fa-solid fa-star"></i></a>
+    </div>
   </a>
 
   <a href="provider_details.html" class="provider-card">
     <div class="provider-card__avatar" style="background:var(--amber-lt);color:var(--amber-dk);">י ל</div>
-    <div style="flex:1;">
+    <div style="flex:1;min-width:0;">
       <div class="provider-card__name">יוסי לוי</div>
-      <div class="provider-card__category"><i class="fa-solid fa-screwdriver-wrench"></i> שיפוצניק</div>
-      <div class="provider-card__details">1.4 ק"מ · 70 ₪</div>
+      <div class="provider-card__meta"><i class="fa-solid fa-screwdriver-wrench"></i> שיפוצניק · 1.4 ק"מ · 70₪</div>
     </div>
     <div class="provider-card__rating"><i class="fa-solid fa-star"></i> 4.7</div>
+    <div class="provider-card__actions">
+      <a href="https://wa.me/972500000000" class="provider-card__wa"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:0500000000" class="provider-card__tel"><i class="fa-solid fa-phone"></i></a>
+      <a href="favorites.html" class="provider-card__fav"><i class="fa-solid fa-star"></i></a>
+    </div>
   </a>
 
   <a href="provider_details.html" class="provider-card">
     <div class="provider-card__avatar" style="background:var(--purple-lt);color:var(--purple);">מ א</div>
-    <div style="flex:1;">
+    <div style="flex:1;min-width:0;">
       <div class="provider-card__name">מיכל אברהם</div>
-      <div class="provider-card__category"><i class="fa-solid fa-camera"></i> צלמת</div>
-      <div class="provider-card__details">2.1 ק"מ · 75 ₪</div>
+      <div class="provider-card__meta"><i class="fa-solid fa-camera"></i> צלמת · 2.1 ק"מ · 75₪</div>
     </div>
     <div class="provider-card__rating"><i class="fa-solid fa-star"></i> 4.8</div>
+    <div class="provider-card__actions">
+      <a href="https://wa.me/972500000000" class="provider-card__wa"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:0500000000" class="provider-card__tel"><i class="fa-solid fa-phone"></i></a>
+    </div>
   </a>
-
 </div>
 
 </body>

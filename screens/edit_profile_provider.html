@@ -3,390 +3,89 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LocalFind — עריכת פרופיל נותן שירות</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<title>LocalFind — פרופיל ספק</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --color-primary:     #1D9E75;
-  --color-primary-light:  #E1F5EE;
-  --color-primary-dark:  #085041;
-  --color-primary-medium:  #0F6E56;
-  --color-primary-border:  #9FE1CB;
-  --amber-lt:  #FAEEDA;
-  --amber-dk:  #633806;
-  --color-background:   #F5F5F2;
-  --color-border:  rgba(0,0,0,0.09);
-  --color-text-secondary:  #6B6B67;
-  --color-placeholder: #B0AEA8;
-  --color-text-main:       #1A1A18;
-  --font-family:      'Heebo', sans-serif;
-  --border-radius-small: 8px;
-  --border-radius-large: 16px;
+  --color-primary: #1D9E75; --color-primary-light: #E1F5EE; --color-primary-dark: #085041;
+  --color-primary-medium: #0F6E56; --color-primary-border: #9FE1CB;
+  --color-background: #F5F5F2; --color-border: rgba(0,0,0,0.09);
+  --color-text-secondary: #6B6B67; --color-placeholder: #B0AEA8;
+  --color-text-main: #1A1A18; --font-family: 'Rubik', sans-serif;
+  --font-family-en: 'Inter', sans-serif;
+  --border-radius-small: 8px; --border-radius-large: 16px;
 }
-
-body {
-  font-family: var(--font-family);
-  background: var(--color-background);
-  color: var(--color-text-main);
-  direction: rtl;
-  min-height: 100vh;
-}
-
-.navbar {
-  background: #fff;
-  border-bottom: 0.5px solid var(--color-border);
-  padding: 12px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-.navbar__logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-text-main);
-  text-decoration: none;
-}
-
-.navbar__logo-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-}
-
-.navbar__links { display: flex; align-items: center; gap: 2px; }
-
-.navbar__link {
-  padding: 6px 11px;
-  border-radius: var(--border-radius-small);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-}
-
-.navbar__link--active {
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  font-weight: 600;
-}
-
-.navbar__user-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  color: var(--color-primary-medium);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 600;
-}
-
-.edit-provider-page {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 20px 16px 32px;
-}
-
-.onboarding-banner {
-  background: var(--amber-lt);
-  border: 0.5px solid #FAC775;
-  border-radius: var(--border-radius-large);
-  padding: 12px 14px;
-  margin-bottom: 16px;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-
-.onboarding-banner__icon { font-size: 18px; flex-shrink: 0; }
-.onboarding-banner__title { font-size: 13px; font-weight: 600; color: var(--amber-dk); margin-bottom: 2px; }
-.onboarding-banner__text { font-size: 12px; color: var(--amber-dk); }
-
-.profile-section {
-  background: #fff;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-large);
-  padding: 16px;
-  margin-bottom: 12px;
-}
-
-.profile-section__title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text-main);
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 0.5px solid var(--color-border);
-}
-
-.avatar-upload {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.avatar-upload__circle {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  font-weight: 600;
-  flex-shrink: 0;
-  position: relative;
-}
-
-.avatar-upload__camera-icon {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0,0,0,0.4);
-  border-radius: 0 0 50% 50%;
-  text-align: center;
-  padding: 4px 0;
-  font-size: 12px;
-}
-
-.avatar-upload__name { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
-.avatar-upload__hint { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 8px; }
-
-.avatar-upload__btn {
-  display: inline-block;
-  font-size: 11px;
-  color: var(--color-primary-medium);
-  border: 0.5px solid var(--color-primary-border);
-  padding: 4px 10px;
-  border-radius: 20px;
-  background: var(--color-primary-light);
-  font-weight: 600;
-}
-
-.service-form__field { margin-bottom: 14px; }
-
-.service-form__label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  margin-bottom: 5px;
-}
-
-.service-form__input {
-  width: 100%;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-small);
-  padding: 10px 12px;
-  font-size: 13px;
-  font-family: var(--font-family);
-  background: #FAFAF8;
-  color: var(--color-text-main);
-}
-
-.service-form__input::placeholder { color: var(--color-placeholder); }
-.service-form__input--number { direction: ltr; }
-
-.service-form__textarea {
-  width: 100%;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-small);
-  padding: 10px 12px;
-  font-size: 13px;
-  font-family: var(--font-family);
-  background: #FAFAF8;
-  color: var(--color-text-main);
-  resize: none;
-  min-height: 80px;
-}
-
-.service-form__textarea::placeholder { color: var(--color-placeholder); }
-
-.service-form__two-cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.category-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 4px;
-}
-
-.category-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 500;
-}
-
-.category-pill--selected {
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  border: 0.5px solid var(--color-primary-border);
-}
-
-.category-pill--unselected {
-  background: #fff;
-  color: var(--color-text-secondary);
-  border: 0.5px solid var(--color-border);
-}
-
-.profile-active-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 0;
-}
-
-.profile-active-toggle__label { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
-.profile-active-toggle__hint  { font-size: 11px; color: var(--color-text-secondary); }
-
-.toggle {
-  width: 36px;
-  height: 20px;
-  border-radius: 10px;
-  background: var(--color-primary);
-  position: relative;
-  flex-shrink: 0;
-}
-
-.toggle__knob {
-  position: absolute;
-  top: 2px;
-  left: 18px;
-  width: 16px;
-  height: 16px;
-  background: #fff;
-  border-radius: 50%;
-}
-
-.save-btn {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  background: var(--color-primary);
-  color: #fff;
-  border-radius: var(--border-radius-small);
-  font-size: 14px;
-  font-weight: 600;
-  text-align: center;
-  text-decoration: none;
-}
+body { font-family: var(--font-family); background: var(--color-background); color: var(--color-text-main); direction: rtl; min-height: 100vh; }
+.navbar { background: #fff; border-bottom: 0.5px solid var(--color-border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+.navbar__logo { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: var(--color-text-main); text-decoration: none; }
+.navbar__logo-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 14px; }
+.navbar__links { display: flex; gap: 2px; }
+.navbar__link { padding: 6px 10px; border-radius: var(--border-radius-small); font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-decoration: none; }
+.navbar__link--active { background: var(--color-primary-light); color: var(--color-primary-dark); font-weight: 600; }
+.navbar__avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--color-primary-light); color: var(--color-primary-medium); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
+.page { max-width: 440px; margin: 0 auto; padding: 20px 16px 32px; }
+.card { background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-large); padding: 16px; margin-bottom: 12px; }
+.card__title { font-size: 14px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 0.5px solid var(--color-border); }
+.field { margin-bottom: 14px; }
+.field:last-child { margin-bottom: 0; }
+.field__label { display: block; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 5px; }
+.field__input { width: 100%; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-small); padding: 10px 12px; font-size: 14px; font-family: var(--font-family); background: #FAFAF8; color: var(--color-text-main); }
+.field__input::placeholder { color: var(--color-placeholder); }
+.field__textarea { width: 100%; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-small); padding: 10px 12px; font-size: 14px; font-family: var(--font-family); background: #FAFAF8; color: var(--color-text-main); resize: none; min-height: 80px; }
+.field__textarea::placeholder { color: var(--color-placeholder); }
+.two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; }
+.toggle-row__text { font-size: 14px; font-weight: 500; }
+.toggle-row__sub { font-size: 11px; color: var(--color-text-secondary); }
+.toggle { width: 36px; height: 20px; border-radius: 10px; background: var(--color-primary); position: relative; flex-shrink: 0; }
+.toggle__knob { position: absolute; top: 2px; left: 18px; width: 16px; height: 16px; background: #fff; border-radius: 50%; }
+.save-btn { display: block; width: 100%; padding: 13px; background: var(--color-primary); color: #fff; border-radius: var(--border-radius-small); font-size: 15px; font-weight: 600; text-align: center; text-decoration: none; }
+@media (max-width: 640px) { .page { padding: 12px 12px 24px; } .navbar__link { padding: 5px 7px; font-size: 11px; } .two-cols { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-
 <nav class="navbar">
   <a href="index.html" class="navbar__logo">
     <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
     LocalFind
   </a>
   <div class="navbar__links">
-    <a href="dashboard_provider.html" class="navbar__link"><i class="fa-solid fa-chart-bar"></i> דאשבורד</a>
-    <a href="edit_profile_provider.html" class="navbar__link navbar__link--active"><i class="fa-solid fa-pen"></i> פרופיל</a>
+    <a href="dashboard_provider.html" class="navbar__link"><i class="fa-solid fa-bell"></i> בקשות</a>
+    <a href="edit_profile_provider.html" class="navbar__link navbar__link--active"><i class="fa-solid fa-user"></i> פרופיל</a>
   </div>
-  <div class="navbar__user-avatar">ד כ</div>
+  <div class="navbar__avatar">ד כ</div>
 </nav>
-
-<div class="edit-provider-page">
-
-  <div class="onboarding-banner">
-    <span class="onboarding-banner__icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
-    <div>
-      <div class="onboarding-banner__title">כמעט סיימת!</div>
-      <div class="onboarding-banner__text">השלם את הפרופיל שלך כדי שלקוחות יוכלו למצוא אותך</div>
+<div class="page">
+  <div class="card">
+    <div class="card__title">פרטי שירות</div>
+    <div class="field">
+      <label class="field__label">מה אתה יכול לעשות? (בשפה חופשית)</label>
+      <textarea class="field__textarea" placeholder="למשל: מורה מתמטיקה, שיפוצים קלים, הסעות...">מורה פרטית מנוסה במתמטיקה ואנגלית לכל הגילאים.</textarea>
+    </div>
+    <div class="two-cols">
+      <div class="field">
+        <label class="field__label">מחיר לשעה (₪)</label>
+        <input class="field__input" type="number" value="80"/>
+      </div>
+      <div class="field">
+        <label class="field__label">עיר</label>
+        <input class="field__input" type="text" value="חיפה"/>
+      </div>
     </div>
   </div>
-
-  <div class="profile-section">
-    <div class="profile-section__title">תמונת פרופיל</div>
-    <div class="avatar-upload">
-      <div class="avatar-upload__circle">
-        ד כ
-        <div class="avatar-upload__camera-icon"><i class="fa-solid fa-camera"></i></div>
-      </div>
+  <div class="card">
+    <div class="card__title">הגדרות</div>
+    <div class="toggle-row">
       <div>
-        <div class="avatar-upload__name">דנה כהן</div>
-        <div class="avatar-upload__hint">לחץ על התמונה להחלפה</div>
-        <span class="avatar-upload__btn"><i class="fa-solid fa-upload"></i> העלה תמונה</span>
+        <div class="toggle-row__text">פרופיל פעיל</div>
+        <div class="toggle-row__sub">מופיע בתוצאות חיפוש</div>
       </div>
+      <div class="toggle"><div class="toggle__knob"></div></div>
     </div>
   </div>
-
-  <div class="profile-section">
-    <div class="profile-section__title">פרטי שירות</div>
-
-    <div class="service-form__field">
-      <label class="service-form__label">קטגוריה</label>
-      <div class="category-pills">
-        <span class="category-pill category-pill--selected"><i class="fa-solid fa-screwdriver-wrench"></i> שיפוצים</span>
-        <span class="category-pill category-pill--unselected"><i class="fa-solid fa-book"></i> הוראה</span>
-        <span class="category-pill category-pill--unselected"><i class="fa-solid fa-dumbbell"></i> כושר</span>
-        <span class="category-pill category-pill--unselected"><i class="fa-solid fa-camera"></i> צילום</span>
-        <span class="category-pill category-pill--unselected"><i class="fa-solid fa-house"></i> ניקיון</span>
-        <span class="category-pill category-pill--unselected"><i class="fa-solid fa-baby"></i> ביביסיטר</span>
-      </div>
-    </div>
-
-    <div class="service-form__field">
-      <label class="service-form__label">תיאור קצר</label>
-      <textarea class="service-form__textarea" placeholder="ספר על הניסיון שלך...">מורה פרטית מנוסה עם 3 שנות ניסיון. מתמחה במתמטיקה ואנגלית לכל הגילאים.</textarea>
-    </div>
-
-    <div class="service-form__two-cols">
-      <div class="service-form__field" style="margin-bottom:0;">
-        <label class="service-form__label">מחיר (₪)</label>
-        <input class="service-form__input service-form__input--number" type="number" value="80"/>
-      </div>
-      <div class="service-form__field" style="margin-bottom:0;">
-        <label class="service-form__label">עיר פעילות</label>
-        <input class="service-form__input" type="text" value="חיפה"/>
-      </div>
-    </div>
-  </div>
-
-  <div class="profile-section">
-    <div class="profile-section__title">הגדרות</div>
-    <div class="profile-active-toggle">
-      <div>
-        <div class="profile-active-toggle__label">פרופיל פעיל</div>
-        <div class="profile-active-toggle__hint">מופיע בתוצאות החיפוש</div>
-      </div>
-      <div class="toggle">
-        <div class="toggle__knob"></div>
-      </div>
-    </div>
-  </div>
-
-  <a href="dashboard_provider.html" class="save-btn">שמור ועבור לדאשבורד</a>
-
+  <a href="dashboard_provider.html" class="save-btn">שמור</a>
 </div>
-
 </body>
 </html>

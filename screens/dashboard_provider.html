@@ -3,264 +3,67 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LocalFind — דאשבורד נותן שירות</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<title>LocalFind — בקשות</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --color-primary:     #1D9E75;
-  --color-primary-light:  #E1F5EE;
-  --color-primary-dark:  #085041;
-  --color-primary-medium:  #0F6E56;
-  --color-primary-border:  #9FE1CB;
-  --purple:    #534AB7;
+  --color-primary: #1D9E75;
+  --color-primary-light: #E1F5EE;
+  --color-primary-dark: #085041;
+  --color-primary-medium: #0F6E56;
+  --color-primary-border: #9FE1CB;
+  --amber: #BA7517;
+  --amber-lt: #FAEEDA;
+  --amber-dk: #633806;
   --purple-lt: #EEEDFE;
-  --amber:     #BA7517;
-  --amber-lt:  #FAEEDA;
-  --amber-dk:  #633806;
-  --color-background:   #F5F5F2;
-  --color-border:  rgba(0,0,0,0.09);
-  --color-text-secondary:  #6B6B67;
-  --color-text-main:       #1A1A18;
-  --font-family:      'Heebo', sans-serif;
+  --purple: #534AB7;
+  --color-background: #F5F5F2;
+  --color-border: rgba(0,0,0,0.09);
+  --color-text-secondary: #6B6B67;
+  --color-placeholder: #B0AEA8;
+  --color-text-main: #1A1A18;
+  --font-family: 'Rubik', sans-serif;
+  --font-family-en: 'Inter', sans-serif;
   --border-radius-small: 8px;
   --border-radius-large: 16px;
 }
+body { font-family: var(--font-family); background: var(--color-background); color: var(--color-text-main); direction: rtl; min-height: 100vh; }
 
-body {
-  font-family: var(--font-family);
-  background: var(--color-background);
-  color: var(--color-text-main);
-  direction: rtl;
-  min-height: 100vh;
-}
+.navbar { background: #fff; border-bottom: 0.5px solid var(--color-border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+.navbar__logo { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: var(--color-text-main); text-decoration: none; }
+.navbar__logo-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 14px; }
+.navbar__links { display: flex; gap: 2px; }
+.navbar__link { padding: 6px 10px; border-radius: var(--border-radius-small); font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-decoration: none; }
+.navbar__link--active { background: var(--color-primary-light); color: var(--color-primary-dark); font-weight: 600; }
+.navbar__avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--color-primary-light); color: var(--color-primary-medium); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
 
-.navbar {
-  background: #fff;
-  border-bottom: 0.5px solid var(--color-border);
-  padding: 12px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
+.page { max-width: 520px; margin: 0 auto; padding: 16px; }
 
-.navbar__logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-text-main);
-  text-decoration: none;
-}
+.greeting { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+.greeting-sub { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 20px; }
 
-.navbar__logo-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-}
+.sort-row { display: flex; gap: 8px; margin-bottom: 14px; }
+.sort-btn { padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; border: 0.5px solid var(--color-border); font-family: var(--font-family); }
+.sort-btn--active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+.sort-btn--inactive { background: #fff; color: var(--color-text-secondary); }
 
-.navbar__links { display: flex; align-items: center; gap: 2px; }
+.request-card { background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-large); padding: 14px; margin-bottom: 10px; }
+.request-card__header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.request-card__title { font-size: 15px; font-weight: 600; }
+.request-card__distance { font-size: 11px; color: var(--color-text-secondary); background: var(--color-background); padding: 3px 8px; border-radius: 20px; }
+.request-card__desc { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 12px; line-height: 1.5; }
+.request-card__footer { display: flex; justify-content: space-between; align-items: center; }
+.request-card__meta { font-size: 11px; color: var(--color-placeholder); }
+.request-card__actions { display: flex; gap: 8px; }
+.request-card__wa { display: flex; align-items: center; gap: 5px; padding: 7px 14px; background: #25D366; color: #fff; border-radius: 20px; font-size: 13px; font-weight: 600; text-decoration: none; }
+.request-card__tel { display: flex; align-items: center; gap: 5px; padding: 7px 14px; background: var(--color-primary-light); color: var(--color-primary-dark); border-radius: 20px; font-size: 13px; font-weight: 600; text-decoration: none; border: 0.5px solid var(--color-primary-border); }
 
-.navbar__link {
-  padding: 6px 11px;
-  border-radius: var(--border-radius-small);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-}
-
-.navbar__link--active {
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  font-weight: 600;
-}
-
-.navbar__user-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  color: var(--color-primary-medium);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 600;
-}
-
-.dashboard-page {
-  max-width: 520px;
-  margin: 0 auto;
-  padding: 16px;
-}
-
-.provider-profile-card {
-  background: #fff;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-large);
-  padding: 16px;
-  margin-bottom: 12px;
-}
-
-.provider-profile-card__header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.provider-profile-card__avatar {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  color: var(--color-primary-medium);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 17px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.provider-profile-card__greeting {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 3px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.provider-profile-card__active-badge {
-  font-size: 10px;
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  border: 0.5px solid var(--color-primary-border);
-  padding: 2px 8px;
-  border-radius: 20px;
-  font-weight: 600;
-}
-
-.provider-profile-card__role {
-  font-size: 12px;
-  color: var(--color-text-secondary);
-}
-
-.provider-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-
-.provider-stats-grid__item {
-  background: var(--color-background);
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-small);
-  padding: 12px 8px;
-  text-align: center;
-}
-
-.provider-stats-grid__number {
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--color-text-main);
-}
-
-.provider-stats-grid__label {
-  font-size: 10px;
-  color: var(--color-text-secondary);
-  margin-top: 3px;
-  font-weight: 500;
-}
-
-.provider-stats-grid__delta {
-  font-size: 10px;
-  margin-top: 3px;
-  font-weight: 500;
-}
-
-.quick-actions-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.quick-action-btn {
-  background: #fff;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-small);
-  padding: 12px 6px;
-  text-align: center;
-  text-decoration: none;
-  color: var(--color-text-main);
-}
-
-.quick-action-btn__icon  { font-size: 20px; display: block; margin-bottom: 5px; }
-.quick-action-btn__label { font-size: 11px; font-weight: 600; }
-
-.recent-reviews-card {
-  background: #fff;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-large);
-  padding: 16px;
-}
-
-.recent-reviews-card__title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text-main);
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 0.5px solid var(--color-border);
-}
-
-.review-item {
-  display: flex;
-  gap: 10px;
-  padding: 9px 0;
-  border-bottom: 0.5px solid var(--color-border);
-}
-
-.review-item:last-child { border-bottom: none; padding-bottom: 0; }
-
-.review-item__avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.review-item__reviewer-name { font-size: 12px; font-weight: 600; }
-.review-item__stars         { color: var(--color-amber); font-size: 11px; margin-right: 6px; }
-.review-item__text          { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; line-height: 1.5; }
-
-.see-all-reviews-link {
-  display: block;
-  text-align: center;
-  margin-top: 12px;
-  font-size: 12px;
-  color: var(--color-primary-medium);
-  font-weight: 600;
-  text-decoration: none;
+@media (max-width: 640px) {
+  .navbar { padding: 10px 12px; }
+  .navbar__link { padding: 5px 7px; font-size: 11px; }
+  .page { padding: 12px; }
 }
 </style>
 </head>
@@ -272,99 +75,65 @@ body {
     LocalFind
   </a>
   <div class="navbar__links">
-    <a href="dashboard_provider.html" class="navbar__link navbar__link--active"><i class="fa-solid fa-chart-bar"></i> דאשבורד</a>
-    <a href="edit_profile_provider.html" class="navbar__link"><i class="fa-solid fa-pen"></i> פרופיל</a>
+    <a href="dashboard_provider.html" class="navbar__link navbar__link--active"><i class="fa-solid fa-bell"></i> בקשות</a>
+    <a href="edit_profile_provider.html" class="navbar__link"><i class="fa-solid fa-user"></i> פרופיל</a>
   </div>
-  <div class="navbar__user-avatar">ד כ</div>
+  <div class="navbar__avatar">ד כ</div>
 </nav>
 
-<div class="dashboard-page">
+<div class="page">
+  <div class="greeting">שלום דנה <i class="fa-solid fa-hand-wave"></i></div>
+  <div class="greeting-sub">3 בקשות חדשות קרובות אליך</div>
 
-  <div class="provider-profile-card">
-    <div class="provider-profile-card__header">
-      <div class="provider-profile-card__avatar">ד כ</div>
-      <div>
-        <div class="provider-profile-card__greeting">
-          שלום, דנה <i class="fa-solid fa-hand-wave"></i>
-          <span class="provider-profile-card__active-badge">פעיל</span>
-        </div>
-        <div class="provider-profile-card__role">מורה פרטית · חיפה</div>
-      </div>
+  <div class="sort-row">
+    <button class="sort-btn sort-btn--active">רלוונטי</button>
+    <button class="sort-btn sort-btn--inactive">קרוב</button>
+  </div>
+
+  <div class="request-card">
+    <div class="request-card__header">
+      <div class="request-card__title"><i class="fa-solid fa-book"></i> מורה למתמטיקה</div>
+      <span class="request-card__distance">0.8 ק"מ</span>
     </div>
-
-    <div class="provider-stats-grid">
-      <div class="provider-stats-grid__item">
-        <div class="provider-stats-grid__number">12</div>
-        <div class="provider-stats-grid__label">לקוחות</div>
-        <div class="provider-stats-grid__delta" style="color:var(--color-primary);">+2 החודש</div>
-      </div>
-      <div class="provider-stats-grid__item">
-        <div class="provider-stats-grid__number">4.9</div>
-        <div class="provider-stats-grid__label">דירוג</div>
-        <div class="provider-stats-grid__delta" style="color:var(--amber);"><i class="fa-solid fa-star"></i> מעולה</div>
-      </div>
-      <div class="provider-stats-grid__item">
-        <div class="provider-stats-grid__number">720₪</div>
-        <div class="provider-stats-grid__label">החודש</div>
-        <div class="provider-stats-grid__delta" style="color:var(--color-primary);">+80₪</div>
+    <div class="request-card__desc">מחפש מורה פרטי לבן שלי בכיתה ח׳ — מתמטיקה ואנגלית, פעמיים בשבוע.</div>
+    <div class="request-card__footer">
+      <span class="request-card__meta">לפני 10 דק׳</span>
+      <div class="request-card__actions">
+        <a href="https://wa.me/972500000000" class="request-card__wa"><i class="fa-brands fa-whatsapp"></i> וואטסאפ</a>
+        <a href="tel:0500000000" class="request-card__tel"><i class="fa-solid fa-phone"></i> חייג</a>
       </div>
     </div>
   </div>
 
-  <div class="quick-actions-grid">
-    <a href="edit_profile_provider.html" class="quick-action-btn">
-      <span class="quick-action-btn__icon"><i class="fa-solid fa-pen"></i></span>
-      <span class="quick-action-btn__label">ערוך פרופיל</span>
-    </a>
-    <a href="reviews.html" class="quick-action-btn">
-      <span class="quick-action-btn__icon"><i class="fa-solid fa-star"></i></span>
-      <span class="quick-action-btn__label">ביקורות</span>
-    </a>
-    <a href="edit_profile_provider.html" class="quick-action-btn">
-      <span class="quick-action-btn__icon"><i class="fa-solid fa-camera"></i></span>
-      <span class="quick-action-btn__label">תמונה</span>
-    </a>
+  <div class="request-card">
+    <div class="request-card__header">
+      <div class="request-card__title"><i class="fa-solid fa-book"></i> שיעורי אנגלית</div>
+      <span class="request-card__distance">1.2 ק"מ</span>
+    </div>
+    <div class="request-card__desc">צריכה עזרה בהכנה לבגרות אנגלית — בית ספר יסודי עד תיכון.</div>
+    <div class="request-card__footer">
+      <span class="request-card__meta">לפני 25 דק׳</span>
+      <div class="request-card__actions">
+        <a href="https://wa.me/972500000000" class="request-card__wa"><i class="fa-brands fa-whatsapp"></i> וואטסאפ</a>
+        <a href="tel:0500000000" class="request-card__tel"><i class="fa-solid fa-phone"></i> חייג</a>
+      </div>
+    </div>
   </div>
 
-  <div class="recent-reviews-card">
-    <div class="recent-reviews-card__title">ביקורות אחרונות</div>
-
-    <div class="review-item">
-      <div class="review-item__avatar" style="background:var(--purple-lt);color:var(--purple);">מ ש</div>
-      <div>
-        <div style="display:flex;align-items:center;">
-          <span class="review-item__reviewer-name">מלי שמיר</span>
-          <span class="review-item__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-        </div>
-        <div class="review-item__text">מורה מעולה, הציון של הבן שלי עלה משמעותית!</div>
+  <div class="request-card">
+    <div class="request-card__header">
+      <div class="request-card__title"><i class="fa-solid fa-dumbbell"></i> מאמן כושר</div>
+      <span class="request-card__distance">2.0 ק"מ</span>
+    </div>
+    <div class="request-card__desc">מחפש מאמן אישי לאימונים בבוקר, 3 פעמים בשבוע.</div>
+    <div class="request-card__footer">
+      <span class="request-card__meta">לפני שעה</span>
+      <div class="request-card__actions">
+        <a href="https://wa.me/972500000000" class="request-card__wa"><i class="fa-brands fa-whatsapp"></i> וואטסאפ</a>
+        <a href="tel:0500000000" class="request-card__tel"><i class="fa-solid fa-phone"></i> חייג</a>
       </div>
     </div>
-
-    <div class="review-item">
-      <div class="review-item__avatar" style="background:var(--amber-lt);color:var(--amber-dk);">ר א</div>
-      <div>
-        <div style="display:flex;align-items:center;">
-          <span class="review-item__reviewer-name">רון אוחיון</span>
-          <span class="review-item__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-        </div>
-        <div class="review-item__text">מסבירה בסבלנות, ממליץ בחום.</div>
-      </div>
-    </div>
-
-    <div class="review-item">
-      <div class="review-item__avatar" style="background:var(--color-primary-light);color:var(--color-primary-medium);">נ כ</div>
-      <div>
-        <div style="display:flex;align-items:center;">
-          <span class="review-item__reviewer-name">נועה כץ</span>
-          <span class="review-item__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-        </div>
-        <div class="review-item__text">שירות מעולה, הילדים פשוט אוהבים אותה.</div>
-      </div>
-    </div>
-
-    <a href="reviews.html" class="see-all-reviews-link">ראה את כל הביקורות ›</a>
   </div>
-
 </div>
 
 </body>
