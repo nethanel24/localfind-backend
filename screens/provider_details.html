@@ -4,379 +4,138 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>LocalFind — פרטי ספק</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --color-primary:     #1D9E75;
-  --color-primary-light:  #E1F5EE;
-  --color-primary-dark:  #085041;
-  --color-primary-medium:  #0F6E56;
-  --color-primary-border:  #9FE1CB;
-  --purple:    #534AB7;
+  --color-primary: #1D9E75;
+  --color-primary-light: #E1F5EE;
+  --color-primary-dark: #085041;
+  --color-primary-medium: #0F6E56;
+  --color-primary-border: #9FE1CB;
+  --amber: #BA7517;
+  --amber-lt: #FAEEDA;
+  --amber-dk: #633806;
   --purple-lt: #EEEDFE;
-  --amber:     #BA7517;
-  --amber-lt:  #FAEEDA;
-  --amber-dk:  #633806;
-  --color-background:   #F5F5F2;
-  --color-border:  rgba(0,0,0,0.09);
-  --color-text-secondary:  #6B6B67;
-  --color-placeholder: #B0AEA8;
-  --color-text-main:       #1A1A18;
-  --font-family:      'Heebo', sans-serif;
+  --purple: #534AB7;
+  --color-background: #F5F5F2;
+  --color-border: rgba(0,0,0,0.09);
+  --color-text-secondary: #6B6B67;
+  --color-text-main: #1A1A18;
+  --font-family: 'Rubik', sans-serif;
+  --font-family-en: 'Inter', sans-serif;
   --border-radius-small: 8px;
   --border-radius-large: 16px;
 }
+body { font-family: var(--font-family); background: var(--color-background); color: var(--color-text-main); direction: rtl; min-height: 100vh; }
 
-body {
-  font-family: var(--font-family);
-  background: var(--color-background);
-  color: var(--color-text-main);
-  direction: rtl;
-  min-height: 100vh;
-}
+.navbar { background: #fff; border-bottom: 0.5px solid var(--color-border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+.navbar__back { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--color-text-secondary); text-decoration: none; }
+.navbar__logo { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 700; color: var(--color-text-main); text-decoration: none; }
+.navbar__logo-icon { width: 26px; height: 26px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 13px; }
 
-.navbar {
-  background: #fff;
-  border-bottom: 0.5px solid var(--color-border);
-  padding: 12px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
+.page { max-width: 520px; margin: 0 auto; padding: 16px; }
 
-.navbar__logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-text-main);
-  text-decoration: none;
-}
+.profile-header { background: var(--color-primary-light); border-radius: var(--border-radius-large); padding: 20px; margin-bottom: 12px; text-align: center; }
+.profile-header__avatar { width: 72px; height: 72px; border-radius: 50%; background: #fff; color: var(--color-primary-medium); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; margin: 0 auto 10px; }
+.profile-header__name { font-size: 20px; font-weight: 700; color: var(--color-primary-dark); margin-bottom: 4px; }
+.profile-header__meta { font-size: 14px; color: var(--color-primary-medium); margin-bottom: 8px; }
+.profile-header__rating { font-size: 16px; font-weight: 600; color: var(--amber-dk); }
 
-.navbar__logo-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-}
+.info-card { background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-large); padding: 16px; margin-bottom: 12px; }
+.info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 0.5px solid var(--color-border); font-size: 14px; }
+.info-row:last-child { border-bottom: none; padding-bottom: 0; }
+.info-row__label { color: var(--color-text-secondary); }
+.info-row__value { font-weight: 600; }
+.info-row__value--green { color: var(--color-primary); }
 
-.navbar__links { display: flex; align-items: center; gap: 2px; }
+.bio { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; }
 
-.navbar__link {
-  padding: 6px 11px;
-  border-radius: var(--border-radius-small);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-}
+.cta-section { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.cta-wa { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; background: #25D366; color: #fff; border-radius: var(--border-radius-small); font-size: 16px; font-weight: 600; text-decoration: none; }
+.cta-tel { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; background: var(--color-primary); color: #fff; border-radius: var(--border-radius-small); font-size: 16px; font-weight: 600; text-decoration: none; }
 
-.navbar__link--active {
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  font-weight: 600;
-}
+.review-card { background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-large); padding: 14px; margin-bottom: 10px; }
+.review-card__header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.review-card__avatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; flex-shrink: 0; }
+.review-card__name { font-size: 13px; font-weight: 600; }
+.review-card__stars { color: var(--amber); font-size: 11px; margin-right: auto; }
+.review-card__text { font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; }
 
-.navbar__user-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--purple-lt);
-  color: var(--purple);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 600;
-}
+.section-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
 
-.provider-detail-page {
-  max-width: 520px;
-  margin: 0 auto;
-  padding: 16px;
-}
-
-.back-link {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 13px;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  margin-bottom: 14px;
-}
-
-.provider-header {
-  background: var(--color-primary-light);
-  border-radius: var(--border-radius-large);
-  padding: 16px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.provider-header__avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: #fff;
-  color: var(--color-primary-medium);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.provider-header__name     { font-size: 18px; font-weight: 600; color: var(--color-primary-dark); margin-bottom: 4px; }
-.provider-header__category { font-size: 13px; color: var(--color-primary-medium); margin-bottom: 6px; }
-
-.provider-header__rating-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.provider-header__rating-score  { font-size: 14px; font-weight: 600; color: var(--amber-dk); }
-.provider-header__rating-count  { font-size: 12px; color: var(--color-text-secondary); }
-
-.provider-header__active-badge {
-  font-size: 10px;
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  border: 0.5px solid var(--color-primary-border);
-  padding: 2px 8px;
-  border-radius: 20px;
-  font-weight: 600;
-}
-
-.provider-info-card {
-  background: #fff;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-large);
-  padding: 16px;
-  margin-bottom: 12px;
-}
-
-.provider-info-card__title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text-main);
-  margin-bottom: 12px;
-}
-
-.provider-info-row {
-  display: flex;
-  align-items: center;
-  padding: 7px 0;
-  border-bottom: 0.5px solid var(--color-border);
-}
-
-.provider-info-row:last-child { border-bottom: none; padding-bottom: 0; }
-
-.provider-info-row__label { font-size: 13px; color: var(--color-text-secondary); flex: 1; }
-.provider-info-row__value { font-size: 13px; font-weight: 500; }
-.provider-info-row__value--price { color: var(--color-primary); font-weight: 600; }
-
-.provider-bio-card {
-  background: #fff;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-large);
-  padding: 16px;
-  margin-bottom: 12px;
-}
-
-.provider-bio-card__title { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
-.provider-bio-card__text  { font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; }
-
-.provider-reviews-preview {
-  background: #fff;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-large);
-  padding: 16px;
-  margin-bottom: 12px;
-}
-
-.provider-reviews-preview__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
-.provider-reviews-preview__title { font-size: 13px; font-weight: 600; }
-
-.provider-reviews-preview__see-all-link {
-  font-size: 12px;
-  color: var(--color-primary-medium);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.review-item {
-  display: flex;
-  gap: 10px;
-  padding: 9px 0;
-  border-bottom: 0.5px solid var(--color-border);
-}
-
-.review-item:last-child { border-bottom: none; padding-bottom: 0; }
-
-.review-item__avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.review-item__reviewer-name { font-size: 12px; font-weight: 600; }
-.review-item__date          { font-size: 10px; color: var(--color-placeholder); margin-right: 6px; }
-.review-item__stars         { color: var(--amber); font-size: 11px; }
-.review-item__text          { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; line-height: 1.5; }
-
-.provider-cta-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 10px;
-}
-
-.contact-provider-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px;
-  background: var(--color-primary);
-  color: #fff;
-  border-radius: var(--border-radius-small);
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.save-to-favorites-btn {
-  width: 50px;
-  height: 50px;
-  border-radius: var(--border-radius-small);
-  background: var(--amber-lt);
-  border: 0.5px solid #FAC775;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  text-decoration: none;
+@media (max-width: 640px) {
+  .page { padding: 12px; }
+  .cta-section { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
 <body>
 
 <nav class="navbar">
+  <a href="feed.html" class="navbar__back">‹ חזרה</a>
   <a href="index.html" class="navbar__logo">
     <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
     LocalFind
   </a>
-  <div class="navbar__links">
-    <a href="feed.html" class="navbar__link"><i class="fa-solid fa-house"></i> בית</a>
-    <a href="favorites.html" class="navbar__link"><i class="fa-solid fa-star"></i> מועדפים</a>
-    <a href="edit_profile_user.html" class="navbar__link"><i class="fa-solid fa-user"></i> פרופיל</a>
-  </div>
-  <div class="navbar__user-avatar">יי</div>
 </nav>
 
-<div class="provider-detail-page">
+<div class="page">
 
-  <a href="feed.html" class="back-link">‹ חזרה לתוצאות</a>
+  <div class="profile-header">
+    <div class="profile-header__avatar">ד כ</div>
+    <div class="profile-header__name">דנה כהן</div>
+    <div class="profile-header__meta"><i class="fa-solid fa-book"></i> מורה פרטית · חיפה · 0.8 ק"מ</div>
+    <div class="profile-header__rating"><i class="fa-solid fa-star"></i> 4.9 (23 ביקורות)</div>
+  </div>
 
-  <div class="provider-header">
-    <div class="provider-header__avatar">ד כ</div>
-    <div>
-      <div class="provider-header__name">דנה כהן</div>
-      <div class="provider-header__category"><i class="fa-solid fa-book"></i> מורה פרטית</div>
-      <div class="provider-header__rating-row">
-        <span class="provider-header__rating-score"><i class="fa-solid fa-star"></i> 4.9</span>
-        <span class="provider-header__rating-count">(23 ביקורות)</span>
-        <span class="provider-header__active-badge">פעיל</span>
-      </div>
+  <div class="cta-section">
+    <a href="https://wa.me/972500000000?text=היי דנה, ראיתי אותך ב-LocalFind ואשמח לשמוע על השירות שלך" class="cta-wa">
+      <i class="fa-brands fa-whatsapp"></i> וואטסאפ
+    </a>
+    <a href="tel:0500000000" class="cta-tel">
+      <i class="fa-solid fa-phone"></i> חייג
+    </a>
+  </div>
+
+  <div class="info-card">
+    <div class="info-row">
+      <span class="info-row__label"><i class="fa-solid fa-money-bill"></i> מחיר לשעה</span>
+      <span class="info-row__value info-row__value--green">80 ₪</span>
+    </div>
+    <div class="info-row">
+      <span class="info-row__label"><i class="fa-solid fa-clock"></i> זמינות</span>
+      <span class="info-row__value">ימים א׳–ו׳</span>
+    </div>
+    <div class="info-row">
+      <span class="info-row__label"><i class="fa-solid fa-location-dot"></i> אזור</span>
+      <span class="info-row__value">חיפה והסביבה</span>
     </div>
   </div>
 
-  <div class="provider-info-card">
-    <div class="provider-info-card__title">פרטי שירות</div>
-    <div class="provider-info-row">
-      <span class="provider-info-row__label"><i class="fa-solid fa-location-dot"></i> אזור פעילות</span>
-      <span class="provider-info-row__value">חיפה והסביבה</span>
-    </div>
-    <div class="provider-info-row">
-      <span class="provider-info-row__label"><i class="fa-solid fa-money-bill"></i> מחיר לשיעור</span>
-      <span class="provider-info-row__value provider-info-row__value--price">80 ₪</span>
-    </div>
-    <div class="provider-info-row">
-      <span class="provider-info-row__label"><i class="fa-solid fa-clock"></i> ניסיון</span>
-      <span class="provider-info-row__value">3 שנים</span>
-    </div>
-    <div class="provider-info-row">
-      <span class="provider-info-row__label"><i class="fa-solid fa-users"></i> לקוחות פעילים</span>
-      <span class="provider-info-row__value">12</span>
-    </div>
+  <div class="info-card">
+    <p class="bio">מורה פרטית מנוסה עם 3 שנות ניסיון. מתמחה במתמטיקה ואנגלית לכל הגילאים.</p>
   </div>
 
-  <div class="provider-bio-card">
-    <div class="provider-bio-card__title">על דנה</div>
-    <p class="provider-bio-card__text">מורה פרטית מנוסה עם 3 שנות ניסיון. מתמחה במתמטיקה ואנגלית לכל הגילאים. זמינה בימים א׳–ו׳, בוקר וערב.</p>
+  <div class="section-title">ביקורות</div>
+
+  <div class="review-card">
+    <div class="review-card__header">
+      <div class="review-card__avatar" style="background:var(--purple-lt);color:var(--purple);">מ ש</div>
+      <span class="review-card__name">מלי שמיר</span>
+      <span class="review-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+    </div>
+    <div class="review-card__text">מורה מעולה! הציון של הבן שלי עלה משמעותית.</div>
   </div>
 
-  <div class="provider-reviews-preview">
-    <div class="provider-reviews-preview__header">
-      <div class="provider-reviews-preview__title">ביקורות</div>
-      <a href="reviews.html" class="provider-reviews-preview__see-all-link">ראה את כל 23 הביקורות ›</a>
+  <div class="review-card">
+    <div class="review-card__header">
+      <div class="review-card__avatar" style="background:var(--amber-lt);color:var(--amber-dk);">ר א</div>
+      <span class="review-card__name">רון אוחיון</span>
+      <span class="review-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
     </div>
-
-    <div class="review-item">
-      <div class="review-item__avatar" style="background:var(--purple-lt);color:var(--purple);">מ ש</div>
-      <div>
-        <div style="display:flex;align-items:center;">
-          <span class="review-item__reviewer-name">מלי שמיר</span>
-          <span class="review-item__date">· ינואר 2025</span>
-          <span class="review-item__stars" style="margin-right:auto;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-        </div>
-        <div class="review-item__text">מורה מעולה! הציון של הבן שלי עלה משמעותית תוך חודשיים.</div>
-      </div>
-    </div>
-
-    <div class="review-item">
-      <div class="review-item__avatar" style="background:var(--amber-lt);color:var(--amber-dk);">ר א</div>
-      <div>
-        <div style="display:flex;align-items:center;">
-          <span class="review-item__reviewer-name">רון אוחיון</span>
-          <span class="review-item__date">· דצמבר 2024</span>
-          <span class="review-item__stars" style="margin-right:auto;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-        </div>
-        <div class="review-item__text">מסבירה בסבלנות, תמיד זמינה לשאלות.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="provider-cta-row">
-    <a href="#" class="contact-provider-btn"><i class="fa-solid fa-comment"></i> צור קשר עם דנה</a>
-    <a href="#" class="save-to-favorites-btn"><i class="fa-solid fa-star"></i></a>
+    <div class="review-card__text">מסבירה בסבלנות, ממליץ בחום.</div>
   </div>
 
 </div>

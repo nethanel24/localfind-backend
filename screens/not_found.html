@@ -4,185 +4,47 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>LocalFind — דף לא נמצא</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --color-primary:     #1D9E75;
-  --color-primary-light:  #E1F5EE;
-  --color-primary-dark:  #085041;
-  --color-primary-medium:  #0F6E56;
-  --color-primary-border:  #9FE1CB;
-  --color-background:   #F5F5F2;
-  --color-border:  rgba(0,0,0,0.09);
-  --color-text-secondary:  #6B6B67;
-  --color-text-main:       #1A1A18;
-  --font-family:      'Heebo', sans-serif;
-  --border-radius-small: 8px;
-  --border-radius-large: 16px;
+  --color-primary: #1D9E75; --color-primary-light: #E1F5EE; --color-primary-border: #9FE1CB;
+  --color-background: #F5F5F2; --color-border: rgba(0,0,0,0.09);
+  --color-text-secondary: #6B6B67; --color-text-main: #1A1A18;
+  --font-family: 'Rubik', sans-serif;
+  --font-family-en: 'Inter', sans-serif; --border-radius-small: 8px;
 }
-
-body {
-  font-family: var(--font-family);
-  background: var(--color-background);
-  color: var(--color-text-main);
-  direction: rtl;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.navbar {
-  background: #fff;
-  border-bottom: 0.5px solid var(--color-border);
-  padding: 12px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.navbar__logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-text-main);
-  text-decoration: none;
-}
-
-.navbar__logo-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-}
-
-.not-found-page {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.not-found-content {
-  max-width: 380px;
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.not-found-content__error-code {
-  font-size: 80px;
-  font-weight: 700;
-  letter-spacing: -4px;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-
-.not-found-content__error-code--green  { color: var(--color-primary); }
-.not-found-content__error-code--faded  { color: var(--color-primary-border); }
-
-.not-found-content__icon {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  margin: 16px auto 24px;
-}
-
-.not-found-content__title {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.not-found-content__description {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  line-height: 1.7;
-  margin-bottom: 32px;
-}
-
-.not-found-content__actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.go-home-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px;
-  background: var(--color-primary);
-  color: #fff;
-  border-radius: var(--border-radius-small);
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.go-back-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px;
-  background: #fff;
-  color: var(--color-text-main);
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-small);
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-}
+body { font-family: var(--font-family); background: var(--color-background); color: var(--color-text-main); direction: rtl; min-height: 100vh; display: flex; flex-direction: column; }
+.navbar { background: #fff; border-bottom: 0.5px solid var(--color-border); padding: 14px 20px; display: flex; align-items: center; justify-content: center; }
+.navbar__logo { display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 700; color: var(--color-text-main); text-decoration: none; }
+.navbar__logo-icon { width: 30px; height: 30px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 15px; }
+.page { flex: 1; display: flex; align-items: center; justify-content: center; }
+.content { text-align: center; padding: 32px 20px; }
+.code { font-size: 72px; font-weight: 700; letter-spacing: -4px; line-height: 1; margin-bottom: 16px; }
+.code span:nth-child(1), .code span:nth-child(3) { color: var(--color-primary); }
+.code span:nth-child(2) { color: var(--color-primary-border); }
+.icon { font-size: 36px; margin-bottom: 16px; }
+.title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.sub { font-size: 15px; color: var(--color-text-secondary); margin-bottom: 28px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; background: var(--color-primary); color: #fff; border-radius: var(--border-radius-small); font-size: 16px; font-weight: 600; text-decoration: none; }
 </style>
 </head>
 <body>
-
 <nav class="navbar">
   <a href="index.html" class="navbar__logo">
     <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
     LocalFind
   </a>
 </nav>
-
-<div class="not-found-page">
-  <div class="not-found-content">
-
-    <div class="not-found-content__error-code">
-      <span class="not-found-content__error-code--green">4</span>
-      <span class="not-found-content__error-code--faded">0</span>
-      <span class="not-found-content__error-code--green">4</span>
-    </div>
-
-    <div class="not-found-content__icon"><i class="fa-solid fa-location-dot"></i></div>
-
-    <h1 class="not-found-content__title">הדף לא נמצא</h1>
-
-    <p class="not-found-content__description">
-      הכתובת שחיפשת לא קיימת<br/>
-      אולי הקישור שגוי או שהדף הוסר
-    </p>
-
-    <div class="not-found-content__actions">
-      <a href="feed.html" class="go-home-btn"><i class="fa-solid fa-house"></i> חזור לדף הבית</a>
-      <a href="#" class="go-back-btn">‹ חזור לדף הקודם</a>
-    </div>
-
+<div class="page">
+  <div class="content">
+    <div class="code"><span>4</span><span>0</span><span>4</span></div>
+    <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+    <div class="title">הדף לא נמצא</div>
+    <div class="sub">הכתובת שחיפשת לא קיימת</div>
+    <a href="index.html" class="btn"><i class="fa-solid fa-house"></i> חזור לדף הבית</a>
   </div>
 </div>
-
 </body>
 </html>

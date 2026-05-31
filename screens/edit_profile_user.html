@@ -3,249 +3,48 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LocalFind — עריכת פרופיל מחפש שירות</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<title>LocalFind — פרופיל</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --color-primary:     #1D9E75;
-  --color-primary-light:  #E1F5EE;
-  --color-primary-dark:  #085041;
-  --color-primary-medium:  #0F6E56;
-  --color-primary-border:  #9FE1CB;
-  --purple:    #534AB7;
-  --purple-lt: #EEEDFE;
-  --red:       #A32D2D;
-  --red-lt:    #FCEBEB;
-  --red-br:    #F09595;
-  --color-background:   #F5F5F2;
-  --color-border:  rgba(0,0,0,0.09);
-  --color-text-secondary:  #6B6B67;
-  --color-placeholder: #B0AEA8;
-  --color-text-main:       #1A1A18;
-  --font-family:      'Heebo', sans-serif;
-  --border-radius-small: 8px;
-  --border-radius-large: 16px;
+  --color-primary: #1D9E75; --color-primary-light: #E1F5EE; --color-primary-dark: #085041;
+  --color-primary-medium: #0F6E56; --color-primary-border: #9FE1CB;
+  --purple: #534AB7; --purple-lt: #EEEDFE;
+  --red: #A32D2D; --red-lt: #FCEBEB; --red-br: #F09595;
+  --color-background: #F5F5F2; --color-border: rgba(0,0,0,0.09);
+  --color-text-secondary: #6B6B67; --color-placeholder: #B0AEA8;
+  --color-text-main: #1A1A18; --font-family: 'Rubik', sans-serif;
+  --font-family-en: 'Inter', sans-serif;
+  --border-radius-small: 8px; --border-radius-large: 16px;
 }
-
-body {
-  font-family: var(--font-family);
-  background: var(--color-background);
-  color: var(--color-text-main);
-  direction: rtl;
-  min-height: 100vh;
-}
-
-.navbar {
-  background: #fff;
-  border-bottom: 0.5px solid var(--color-border);
-  padding: 12px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-.navbar__logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-text-main);
-  text-decoration: none;
-}
-
-.navbar__logo-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-}
-
-.navbar__links { display: flex; align-items: center; gap: 2px; }
-
-.navbar__link {
-  padding: 6px 11px;
-  border-radius: var(--border-radius-small);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  text-decoration: none;
-}
-
-.navbar__link--active {
-  background: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  font-weight: 600;
-}
-
-.navbar__user-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--purple-lt);
-  color: var(--purple);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 600;
-}
-
-.edit-user-page {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 20px 16px 32px;
-}
-
-.profile-section {
-  background: #fff;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-large);
-  padding: 16px;
-  margin-bottom: 12px;
-}
-
-.profile-section__title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text-main);
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 0.5px solid var(--color-border);
-}
-
-.user-avatar-section {
-  text-align: center;
-  padding: 8px 0 4px;
-}
-
-.user-avatar-section__circle {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: var(--purple-lt);
-  color: var(--purple);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  font-weight: 600;
-  margin: 0 auto 12px;
-  position: relative;
-}
-
-.user-avatar-section__camera-icon {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0,0,0,0.4);
-  border-radius: 0 0 50% 50%;
-  text-align: center;
-  padding: 5px 0;
-  font-size: 13px;
-}
-
-.user-avatar-section__upload-btn {
-  display: inline-block;
-  font-size: 11px;
-  color: var(--color-primary-medium);
-  border: 0.5px solid var(--color-primary-border);
-  padding: 4px 12px;
-  border-radius: 20px;
-  background: var(--color-primary-light);
-  font-weight: 600;
-}
-
-.personal-details-form__field { margin-bottom: 14px; }
-
-.personal-details-form__label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  margin-bottom: 5px;
-}
-
-.personal-details-form__input {
-  width: 100%;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-small);
-  padding: 10px 12px;
-  font-size: 13px;
-  font-family: var(--font-family);
-  background: #FAFAF8;
-  color: var(--color-text-main);
-}
-
-.personal-details-form__input::placeholder { color: var(--color-placeholder); }
-.personal-details-form__input--email { direction: ltr; text-align: right; color: var(--color-text-secondary); }
-.personal-details-form__input--phone { direction: ltr; text-align: right; }
-
-.password-form__field { margin-bottom: 14px; }
-
-.password-form__label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  margin-bottom: 5px;
-}
-
-.password-form__input {
-  width: 100%;
-  border: 0.5px solid var(--color-border);
-  border-radius: var(--border-radius-small);
-  padding: 10px 12px;
-  font-size: 13px;
-  font-family: var(--font-family);
-  background: #FAFAF8;
-  color: var(--color-text-main);
-}
-
-.password-form__input::placeholder { color: var(--color-placeholder); }
-
-.save-changes-btn {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  background: var(--color-primary);
-  color: #fff;
-  border-radius: var(--border-radius-small);
-  font-size: 14px;
-  font-weight: 600;
-  text-align: center;
-  text-decoration: none;
-  margin-bottom: 12px;
-}
-
-.delete-account-btn {
-  display: block;
-  width: 100%;
-  padding: 11px;
-  border: 0.5px solid var(--red-br);
-  border-radius: var(--border-radius-small);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--red);
-  text-align: center;
-  background: none;
-  text-decoration: none;
-}
+body { font-family: var(--font-family); background: var(--color-background); color: var(--color-text-main); direction: rtl; min-height: 100vh; }
+.navbar { background: #fff; border-bottom: 0.5px solid var(--color-border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+.navbar__logo { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: var(--color-text-main); text-decoration: none; }
+.navbar__logo-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 14px; }
+.navbar__links { display: flex; gap: 2px; }
+.navbar__link { padding: 6px 10px; border-radius: var(--border-radius-small); font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-decoration: none; }
+.navbar__link--active { background: var(--color-primary-light); color: var(--color-primary-dark); font-weight: 600; }
+.navbar__avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--purple-lt); color: var(--purple); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
+.page { max-width: 440px; margin: 0 auto; padding: 20px 16px 32px; }
+.avatar-section { text-align: center; margin-bottom: 20px; }
+.avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--purple-lt); color: var(--purple); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; margin: 0 auto 10px; }
+.avatar-name { font-size: 17px; font-weight: 600; }
+.card { background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-large); padding: 16px; margin-bottom: 12px; }
+.card__title { font-size: 14px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 0.5px solid var(--color-border); }
+.field { margin-bottom: 14px; }
+.field:last-child { margin-bottom: 0; }
+.field__label { display: block; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 5px; }
+.field__input { width: 100%; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-small); padding: 10px 12px; font-size: 14px; font-family: var(--font-family); background: #FAFAF8; color: var(--color-text-main); }
+.field__input--ltr { direction: ltr; text-align: right; }
+.field__input::placeholder { color: var(--color-placeholder); }
+.save-btn { display: block; width: 100%; padding: 13px; background: var(--color-primary); color: #fff; border-radius: var(--border-radius-small); font-size: 15px; font-weight: 600; text-align: center; text-decoration: none; margin-bottom: 10px; }
+.delete-btn { display: block; width: 100%; padding: 11px; border: 0.5px solid var(--red-br); border-radius: var(--border-radius-small); font-size: 14px; font-weight: 500; color: var(--red); text-align: center; text-decoration: none; }
+@media (max-width: 640px) { .page { padding: 12px 12px 24px; } .navbar__link { padding: 5px 7px; font-size: 11px; } }
 </style>
 </head>
 <body>
-
 <nav class="navbar">
   <a href="index.html" class="navbar__logo">
     <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
@@ -253,69 +52,43 @@ body {
   </a>
   <div class="navbar__links">
     <a href="feed.html" class="navbar__link"><i class="fa-solid fa-house"></i> בית</a>
-    <a href="favorites.html" class="navbar__link"><i class="fa-solid fa-star"></i> מועדפים</a>
     <a href="edit_profile_user.html" class="navbar__link navbar__link--active"><i class="fa-solid fa-user"></i> פרופיל</a>
   </div>
-  <div class="navbar__user-avatar">יי</div>
+  <div class="navbar__avatar">יי</div>
 </nav>
-
-<div class="edit-user-page">
-
-  <div class="profile-section">
-    <div class="profile-section__title">תמונת פרופיל</div>
-    <div class="user-avatar-section">
-      <div class="user-avatar-section__circle">
-        יי
-        <div class="user-avatar-section__camera-icon"><i class="fa-solid fa-camera"></i></div>
-      </div>
-      <span class="user-avatar-section__upload-btn"><i class="fa-solid fa-upload"></i> שנה תמונה</span>
+<div class="page">
+  <div class="avatar-section">
+    <div class="avatar">יי</div>
+    <div class="avatar-name">ישראל ישראלי</div>
+  </div>
+  <div class="card">
+    <div class="card__title">פרטים אישיים</div>
+    <div class="field">
+      <label class="field__label">שם מלא</label>
+      <input class="field__input" type="text" value="ישראל ישראלי"/>
+    </div>
+    <div class="field">
+      <label class="field__label">אימייל</label>
+      <input class="field__input field__input--ltr" type="email" value="israel@example.com"/>
+    </div>
+    <div class="field">
+      <label class="field__label">טלפון</label>
+      <input class="field__input field__input--ltr" type="tel" placeholder="050-0000000"/>
     </div>
   </div>
-
-  <div class="profile-section">
-    <div class="profile-section__title">פרטים אישיים</div>
-
-    <div class="personal-details-form__field">
-      <label class="personal-details-form__label">שם מלא</label>
-      <input class="personal-details-form__input" type="text" value="ישראל ישראלי"/>
+  <div class="card">
+    <div class="card__title">שינוי סיסמה</div>
+    <div class="field">
+      <label class="field__label">סיסמה נוכחית</label>
+      <input class="field__input" type="password" placeholder="••••••••"/>
     </div>
-
-    <div class="personal-details-form__field">
-      <label class="personal-details-form__label">אימייל</label>
-      <input class="personal-details-form__input personal-details-form__input--email" type="email" value="israel@example.com"/>
-    </div>
-
-    <div class="personal-details-form__field" style="margin-bottom:0;">
-      <label class="personal-details-form__label">
-        טלפון <span style="color:var(--color-placeholder);font-weight:400;">(אופציונלי)</span>
-      </label>
-      <input class="personal-details-form__input personal-details-form__input--phone" type="tel" placeholder="050-0000000"/>
+    <div class="field">
+      <label class="field__label">סיסמה חדשה</label>
+      <input class="field__input" type="password" placeholder="לפחות 6 תווים"/>
     </div>
   </div>
-
-  <div class="profile-section">
-    <div class="profile-section__title">שינוי סיסמה</div>
-
-    <div class="password-form__field">
-      <label class="password-form__label">סיסמה נוכחית</label>
-      <input class="password-form__input" type="password" placeholder="••••••••"/>
-    </div>
-
-    <div class="password-form__field">
-      <label class="password-form__label">סיסמה חדשה</label>
-      <input class="password-form__input" type="password" placeholder="לפחות 6 תווים"/>
-    </div>
-
-    <div class="password-form__field" style="margin-bottom:0;">
-      <label class="password-form__label">אימות סיסמה</label>
-      <input class="password-form__input" type="password" placeholder="הקלד שוב"/>
-    </div>
-  </div>
-
-  <a href="#" class="save-changes-btn">שמור שינויים</a>
-  <a href="#" class="delete-account-btn">מחק חשבון</a>
-
+  <a href="#" class="save-btn">שמור שינויים</a>
+  <a href="#" class="delete-btn">מחק חשבון</a>
 </div>
-
 </body>
 </html>
