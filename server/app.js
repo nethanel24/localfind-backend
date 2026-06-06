@@ -9,7 +9,8 @@ app.use(logger);
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../screens')));
-
-app.use('/', require('./routes/index'));
-app.use('/api/auth', require('./routes/authRoutes'));
+const indexRouter=require('./routes');
+const authRoutes = require('./routes/authRoutes');
+app.use('/', indexRouter); 
+app.use('/api/auth',authRoutes);
 module.exports = app;
