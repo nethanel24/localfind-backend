@@ -4,6 +4,7 @@ import path from "path";
 import logger from "./middleware/logger";
 import indexRouter from "./routes";
 import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/userRoutes";
 import errorHandler from "./middleware/errorHandler";
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.static(path.join(__dirname, "../screens")));
 
 app.use("/", indexRouter);
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 app.use(errorHandler);
 
 export default app;

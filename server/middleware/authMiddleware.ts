@@ -24,4 +24,16 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { protect };
+const authorize = (...roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const reqUser = (req as any).user;
+
+    if (!roles.includes(reqUser.role)) {
+      return res.status(403).json({ message: "Insufficient permissions" });
+    }
+
+    next();
+  };
+};
+
+export { protect, authorize };
