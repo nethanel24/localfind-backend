@@ -7,8 +7,9 @@ import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 import adminRoutes from "./routes/adminRoutes";
 import categoryRoutes from "./routes/categoryRoutes";
-import errorHandler from "./middleware/errorHandler";
 import statsRoutes from "./routes/statsRoutes";
+import reviewRoutes from "./routes/reviewRoutes";
+import errorHandler from "./middleware/errorHandler";
 const app = express();
 app.use(logger);
 app.use(cors());
@@ -20,6 +21,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/admin/stats", statsRoutes);
+app.use("/api/reviews", reviewRoutes);
 app.use(errorHandler);
 
 export default app;
