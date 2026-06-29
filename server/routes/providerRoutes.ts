@@ -7,16 +7,13 @@ import {
   updateProvider,
   deleteProvider,
 } from "../controllers/providerController";
-
+import validate from "../middleware/validate";
+import { createProviderSchema, updateProviderSchema } from "../validation/providerValidation";
 const router = express.Router();
-
-// Public routes
 router.get("/", getProviders);
 router.get("/:id", getProviderById);
-
-// Protected routes
-router.post("/", protect, createProvider);
-router.put("/:id", protect, updateProvider);
+router.post("/", protect, validate(createProviderSchema), createProvider);
+router.put("/:id", protect, validate(updateProviderSchema), updateProvider);
 router.delete("/:id", protect, deleteProvider);
 
 export default router;
