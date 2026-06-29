@@ -1,6 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { SignOptions } from "jsonwebtoken";
+import { OAuth2Client } from "google-auth-library";
 import User from "../models/User";
+
+const client = new OAuth2Client();
 
 const generateToken = (id: string) => {
   const options: SignOptions = {
@@ -10,9 +13,6 @@ const generateToken = (id: string) => {
   return jwt.sign({ id }, process.env.JWT_SECRET as string, options);
 };
 
-// @desc Register a new user
-// @route POST /api/auth/register
-// @access Public
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, email, password } = req.body;
@@ -25,9 +25,6 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
   }
 };
 
-// @desc Login an existing user
-// @route POST /api/auth/login
-// @access Public
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
@@ -46,6 +43,37 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const token = generateToken((user._id as any).toString());
+
+    res.status(200).json({ success: true, token });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const googleSignin = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const credential = req.body.credential;
+
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const email = payload?.email;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name: payload?.name,
+        email: email,
+        imgUrl: payload?.picture,
+        password: "google-signin",
+      });
     }
 
     const token = generateToken((user._id as any).toString());
