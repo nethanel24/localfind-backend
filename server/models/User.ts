@@ -26,6 +26,10 @@ const userSchema = new Schema({
     enum: ["user", "provider", "admin"],
     default: "user",
   },
+  imgUrl: {
+    type: String,
+    default: "",
+  },
 }, { timestamps: true });
 
 userSchema.pre("save", async function () {
