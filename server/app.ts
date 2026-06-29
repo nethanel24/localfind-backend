@@ -10,6 +10,7 @@ import categoryRoutes from "./routes/categoryRoutes";
 import statsRoutes from "./routes/statsRoutes";
 import reviewRoutes from "./routes/reviewRoutes";
 import searchRoutes from "./routes/searchRoutes";
+import fileRoutes from "./routes/fileRoutes";
 import errorHandler from "./middleware/errorHandler";
 const app = express();
 app.use(logger);
@@ -24,6 +25,8 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/admin/stats", statsRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/search",searchRoutes);
+app.use("/api/file", fileRoutes);
 app.use(errorHandler);
+app.use(express.static("public"));
 
 export default app;
