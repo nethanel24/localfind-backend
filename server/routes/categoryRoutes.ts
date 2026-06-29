@@ -5,14 +5,11 @@ import {
   createCategory,
   deleteCategory,
 } from "../controllers/categoryController";
-
+import validate from "../middleware/validate";
+import { createCategorySchema } from "../validation/categoryValidation";
 const router = express.Router();
-
-// Public — anyone can read categories (onboarding, feed filters)
 router.get("/", getCategories);
-
-// Admin only — managing categories
-router.post("/add", protect, authorize("admin"), createCategory);
+router.post("/add", protect, authorize("admin"), validate(createCategorySchema), createCategory);
 router.delete("/:id", protect, authorize("admin"), deleteCategory);
 
 export default router;
