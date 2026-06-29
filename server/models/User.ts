@@ -30,6 +30,12 @@ const userSchema = new Schema({
     type: String,
     default: "",
   },
+  favorites: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Provider",
+    },
+  ],
 }, { timestamps: true });
 
 userSchema.pre("save", async function () {
