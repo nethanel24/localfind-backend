@@ -21,7 +21,8 @@
     "joi": "^18.2.3",
     "jsonwebtoken": "^9.0.3",
     "mongodb": "^7.2.0",
-    "mongoose": "^9.6.3"
+    "mongoose": "^9.6.3",
+    "openai": "^6.45.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
