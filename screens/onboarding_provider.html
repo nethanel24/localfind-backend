@@ -52,26 +52,35 @@ body { font-family: var(--font-family); background: var(--color-background); col
 
 .divider { border: none; border-top: 0.5px solid var(--color-border); margin-bottom: 24px; }
 
-/* SUGGESTION CARDS */
-.suggestions-label { font-size: 11px; font-weight: 600; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-
+/* SUGGESTED CATEGORY (single, AI-matched) */
 .suggestion-card {
   background: #fff;
-  border: 0.5px solid var(--color-border);
+  border: 1.5px solid var(--color-primary-border);
   border-radius: var(--border-radius-large);
-  padding: 14px 16px;
+  padding: 16px;
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .suggestion-card__icon { font-size: 28px; color: var(--color-primary); flex-shrink: 0; width: 44px; text-align: center; }
 .suggestion-card__title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
 .suggestion-card__sub { font-size: 13px; color: var(--color-text-secondary); }
-.suggestion-card__badge { font-size: 10px; background: var(--color-primary-light); color: var(--color-primary-dark); padding: 2px 8px; border-radius: 20px; display: inline-block; margin-top: 4px; }
-.suggestion-card__btns { display: flex; gap: 8px; flex-shrink: 0; margin-right: auto; }
-.suggestion-card__yes { width: 38px; height: 38px; border-radius: 50%; background: var(--color-primary-light); border: 1.5px solid var(--color-primary-border); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 17px; text-decoration: none; cursor: pointer; }
-.suggestion-card__no { width: 38px; height: 38px; border-radius: 50%; background: var(--red-lt); border: 1.5px solid var(--red-br); color: var(--red); display: flex; align-items: center; justify-content: center; font-size: 17px; text-decoration: none; cursor: pointer; }
+.suggestion-card__yes { width: 38px; height: 38px; border-radius: 50%; background: var(--color-primary-light); border: 1.5px solid var(--color-primary-border); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 17px; text-decoration: none; cursor: pointer; flex-shrink: 0; margin-right: auto; }
+
+.manual-pick { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 24px; }
+.manual-pick__toggle { color: var(--color-primary-dark); font-weight: 600; text-decoration: underline; cursor: pointer; }
+.manual-pick__select {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--border-radius-small);
+  border: 0.5px solid var(--color-border);
+  font-family: var(--font-family);
+  font-size: 14px;
+  color: var(--color-text-main);
+  background: #fff;
+}
 
 /* SLIDER */
 .slider-card { background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-large); padding: 18px 16px; margin-bottom: 24px; }
@@ -111,46 +120,27 @@ body { font-family: var(--font-family); background: var(--color-background); col
   <hr class="divider"/>
 
   <!-- STEP 2 -->
-  <div class="section-title">יש ביקוש לאלה קרוב אליך</div>
-  <div class="section-sub">סמן אם מעניין אותך או לא</div>
+  <div class="section-title">זיהינו את הקטגוריה המתאימה</div>
+  <div class="section-sub">אפשר לאשר, או לבחור קטגוריה אחרת ידנית</div>
 
   <div class="suggestion-card">
     <div class="suggestion-card__icon"><i class="fa-solid fa-dog"></i></div>
     <div style="flex:1;min-width:0;">
       <div class="suggestion-card__title">שמירה על כלבים</div>
-      <div class="suggestion-card__sub">בוקר / ערב · חיפה</div>
-      <div class="suggestion-card__badge">🔥 ביקוש גבוה</div>
+      <div class="suggestion-card__sub">התאמה אוטומטית לפי מה שכתבת</div>
     </div>
-    <div class="suggestion-card__btns">
-      <a href="#" class="suggestion-card__no"><i class="fa-solid fa-xmark"></i></a>
-      <a href="#" class="suggestion-card__yes"><i class="fa-solid fa-check"></i></a>
-    </div>
+    <a href="#" class="suggestion-card__yes"><i class="fa-solid fa-check"></i></a>
   </div>
 
-  <div class="suggestion-card">
-    <div class="suggestion-card__icon"><i class="fa-solid fa-car"></i></div>
-    <div style="flex:1;min-width:0;">
-      <div class="suggestion-card__title">הסעות</div>
-      <div class="suggestion-card__sub">בוקר · אזורך</div>
-      <div class="suggestion-card__badge">📍 קרוב אליך</div>
-    </div>
-    <div class="suggestion-card__btns">
-      <a href="#" class="suggestion-card__no"><i class="fa-solid fa-xmark"></i></a>
-      <a href="#" class="suggestion-card__yes"><i class="fa-solid fa-check"></i></a>
-    </div>
-  </div>
-
-  <div class="suggestion-card">
-    <div class="suggestion-card__icon"><i class="fa-solid fa-broom"></i></div>
-    <div style="flex:1;min-width:0;">
-      <div class="suggestion-card__title">ניקיון בתים</div>
-      <div class="suggestion-card__sub">גמיש · חיפה</div>
-      <div class="suggestion-card__badge">🔥 ביקוש גבוה</div>
-    </div>
-    <div class="suggestion-card__btns">
-      <a href="#" class="suggestion-card__no"><i class="fa-solid fa-xmark"></i></a>
-      <a href="#" class="suggestion-card__yes"><i class="fa-solid fa-check"></i></a>
-    </div>
+  <div class="manual-pick">
+    לא מדויק? <span class="manual-pick__toggle">בחר קטגוריה מהרשימה</span>
+    <select class="manual-pick__select">
+      <option value="">בחר קטגוריה...</option>
+      <option value="dog-sitting">שמירה על כלבים</option>
+      <option value="rides">הסעות</option>
+      <option value="cleaning">ניקיון בתים</option>
+      <option value="tutoring">הוראה</option>
+    </select>
   </div>
 
   <hr class="divider"/>
