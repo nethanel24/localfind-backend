@@ -4,7 +4,7 @@ import { getReviewsByProvider, createReview } from "../controllers/reviewControl
 import validate from "../middleware/validate";
 import { createReviewSchema } from "../validation/reviewValidation";
 const router = express.Router();
-router.get("/", validate(createReviewSchema),getReviewsByProvider);
-router.post("/add", protect, createReview);
+router.get("/", getReviewsByProvider);
+router.post("/add", protect, validate(createReviewSchema), createReview);
 
 export default router;
