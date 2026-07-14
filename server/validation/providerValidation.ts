@@ -23,3 +23,7 @@ export const updateProviderSchema = Joi.object({
   openness: Joi.number().min(0).max(100),
   isActive: Joi.boolean(),
 });
+
+export const detectCategorySchema = Joi.object({
+  text: Joi.string().min(10).max(1000).required(),
+});
