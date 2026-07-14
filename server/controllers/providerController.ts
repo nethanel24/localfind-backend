@@ -1,5 +1,11 @@
 import { Request, Response, NextFunction } from "express";
+import OpenAI from "openai";
 import Provider from "../models/Provider";
+import Category from "../models/Category";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 // GET /api/providers
 export const getProviders = async (req: Request, res: Response, next: NextFunction) => {
@@ -133,6 +139,59 @@ export const deleteProvider = async (req: Request, res: Response, next: NextFunc
     await Provider.findByIdAndDelete(req.params.id);
 
     res.status(204).json({ success: true, data: {} });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// POST /api/providers/detect-category
+export const detectCategory = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { text } = req.body;
+
+    const categories = await Category.find().select("name");
+    const categoryNames = categories.map((c) => c.name).join(", ");
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: `You are a helper that classifies a service provider's description into a category.
+You must respond with a single JSON object in this exact format: { "category": "<category name>" }.
+Only use a category from this list: ${categoryNames}.
+If nothing matches, pick the closest one.`,
+        },
+        {
+          role: "user",
+          content: text,
+        },
+      ],
+    });
+
+    const raw = completion.choices[0].message.content || "";
+    let matchedCategoryName: string;
+
+    try {
+      const parsed = JSON.parse(raw);
+      matchedCategoryName = parsed.category;
+    } catch {
+      return res.status(500).json({ message: "Failed to parse AI response" });
+    }
+
+    const category = await Category.findOne({ name: matchedCategoryName });
+    if (!category) {
+      return res.status(404).json({ message: "No matching category found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {
+        _id: category._id,
+        name: category.name,
+        icon: category.icon,
+      },
+    });
   } catch (error) {
     next(error);
   }
