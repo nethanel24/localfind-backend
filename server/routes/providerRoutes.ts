@@ -6,11 +6,13 @@ import {
   createProvider,
   updateProvider,
   deleteProvider,
+  detectCategory,
 } from "../controllers/providerController";
 import validate from "../middleware/validate";
-import { createProviderSchema, updateProviderSchema } from "../validation/providerValidation";
+import { createProviderSchema, updateProviderSchema, detectCategorySchema } from "../validation/providerValidation";
 const router = express.Router();
 router.get("/", getProviders);
+router.post("/detect-category", protect, validate(detectCategorySchema), detectCategory);
 router.get("/:id", getProviderById);
 router.post("/", protect, validate(createProviderSchema), createProvider);
 router.put("/:id", protect, validate(updateProviderSchema), updateProvider);
