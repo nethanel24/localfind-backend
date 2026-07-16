@@ -21,7 +21,7 @@ Two parts of the app use OpenAI (`gpt-4o-mini`):
 - Searching in the feed: you type what you need in free text, and it gets matched to one of the existing categories, then providers in that category near you show up.
 - Provider onboarding: instead of making a new provider pick a category from a list, they just describe what they do and the app suggests the matching category.
 
-For location stuff, providers and requests use MongoDB's geospatial features (2dsphere index, `$near` queries), so distance-based results are calculated for real and not just made up.
+For location stuff, providers use MongoDB's geospatial features (2dsphere index, `$near` queries), so search results are sorted by real distance from the user. Requests don't have a location field, so there's no distance-based sorting for provider leads right now, just newest-first.
 
 ## Data model
 
