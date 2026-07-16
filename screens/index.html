@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LocalFind</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --color-primary: #1D9E75;
+  --color-primary-light: #E1F5EE;
+  --color-primary-dark: #085041;
+  --color-primary-medium: #0F6E56;
+  --color-primary-border: #9FE1CB;
+  --color-background: #F5F5F2;
+  --color-border: rgba(0,0,0,0.09);
+  --color-text-secondary: #6B6B67;
+  --color-text-main: #1A1A18;
+  --font-family: 'Rubik', sans-serif;
+  --font-family-en: 'Inter', sans-serif;
+  --border-radius-small: 8px;
+  --border-radius-large: 16px;
+}
+body { font-family: var(--font-family); background: var(--color-background); color: var(--color-text-main); direction: rtl; min-height: 100vh; display: flex; flex-direction: column; }
+.navbar { background: #fff; border-bottom: 0.5px solid var(--color-border); padding: 14px 20px; display: flex; align-items: center; justify-content: center; }
+.navbar__logo { display: flex; align-items: center; gap: 8px; font-size: 19px; font-weight: 700; color: var(--color-text-main); text-decoration: none; }
+.navbar__logo-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 16px; }
+.hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 48px 20px 32px; }
+.hero__badge { display: inline-flex; align-items: center; gap: 6px; background: var(--color-primary-light); color: var(--color-primary-dark); border: 0.5px solid var(--color-primary-border); border-radius: 20px; padding: 5px 14px; font-size: 13px; font-weight: 600; margin-bottom: 20px; }
+.hero__title { font-size: 34px; font-weight: 700; line-height: 1.3; margin-bottom: 12px; max-width: 420px; }
+.hero__title span { color: var(--color-primary); }
+.hero__subtitle { font-size: 15px; color: var(--color-text-secondary); line-height: 1.7; margin-bottom: 32px; max-width: 360px; }
+.hero__actions { display: flex; gap: 12px; justify-content: center; }
+.btn-primary { padding: 13px 28px; background: var(--color-primary); color: #fff; border-radius: var(--border-radius-small); font-size: 16px; font-weight: 600; text-decoration: none; font-family: var(--font-family); }
+.btn-secondary { padding: 13px 28px; background: #fff; color: var(--color-text-main); border: 0.5px solid var(--color-border); border-radius: var(--border-radius-small); font-size: 16px; font-weight: 500; text-decoration: none; font-family: var(--font-family); }
+.footer { padding: 16px; text-align: center; font-size: 13px; color: var(--color-text-secondary); }
+@media (max-width: 640px) { .hero { padding: 32px 16px; } .hero__title { font-size: 26px; } .hero__actions { flex-direction: column; align-items: center; } }
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a href="index.html" class="navbar__logo">
+    <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+    LocalFind
+  </a>
+</nav>
+<section class="hero">
+  <div class="hero__badge"><i class="fa-solid fa-location-dot"></i> שירותים קרובים אליך</div>
+  <h1 class="hero__title">מצא <span>בעל מקצוע</span> קרוב אליך — עכשיו</h1>
+  <p class="hero__subtitle">כתוב מה אתה צריך ותוך שניות תקבל רשימה של אנשים זמינים קרוב אליך</p>
+  <div class="hero__actions">
+    <a href="register.html" class="btn-primary">הירשם</a>
+    <a href="login.html" class="btn-secondary">התחבר</a>
+  </div>
+</section>
+<footer class="footer">© 2025 LocalFind</footer>
+</body>
+</html>

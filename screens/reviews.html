@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LocalFind — דרג את השירות</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --color-primary: #1D9E75;
+  --color-primary-light: #E1F5EE;
+  --color-primary-dark: #085041;
+  --color-primary-medium: #0F6E56;
+  --color-primary-border: #9FE1CB;
+  --amber: #BA7517;
+  --amber-lt: #FAEEDA;
+  --color-background: #F5F5F2;
+  --color-border: rgba(0,0,0,0.09);
+  --color-text-secondary: #6B6B67;
+  --color-placeholder: #B0AEA8;
+  --color-text-main: #1A1A18;
+  --font-family: 'Rubik', sans-serif;
+  --font-family-en: 'Inter', sans-serif;
+  --border-radius-small: 8px;
+  --border-radius-large: 16px;
+}
+body { font-family: var(--font-family); background: var(--color-background); color: var(--color-text-main); direction: rtl; min-height: 100vh; }
+
+.navbar { background: #fff; border-bottom: 0.5px solid var(--color-border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+.navbar__back { font-size: 14px; color: var(--color-text-secondary); text-decoration: none; }
+.navbar__logo { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 700; color: var(--color-text-main); text-decoration: none; }
+.navbar__logo-icon { width: 26px; height: 26px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 13px; }
+
+.page { max-width: 420px; margin: 0 auto; padding: 24px 16px; }
+
+.rate-card { background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-large); padding: 24px; text-align: center; margin-bottom: 16px; }
+.rate-card__avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--color-primary-light); color: var(--color-primary-medium); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; margin: 0 auto 10px; }
+.rate-card__name { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+.rate-card__meta { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 20px; }
+.rate-card__prompt { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+.stars { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+.star { font-size: 36px; color: var(--color-placeholder); cursor: pointer; }
+.star--selected { color: var(--amber); }
+.rate-card__textarea { width: 100%; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-small); padding: 12px; font-size: 14px; font-family: var(--font-family); background: #FAFAF8; resize: none; min-height: 80px; margin-bottom: 16px; direction: rtl; }
+.rate-card__textarea::placeholder { color: var(--color-placeholder); }
+.submit-btn { display: block; width: 100%; padding: 13px; background: var(--color-primary); color: #fff; border-radius: var(--border-radius-small); font-size: 16px; font-weight: 600; text-align: center; text-decoration: none; }
+
+@media (max-width: 640px) { .page { padding: 16px 12px; } }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="provider_details.html" class="navbar__back">‹ חזרה</a>
+  <a href="index.html" class="navbar__logo">
+    <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+    LocalFind
+  </a>
+</nav>
+
+<div class="page">
+  <div class="rate-card">
+    <div class="rate-card__avatar">ד כ</div>
+    <div class="rate-card__name">דנה כהן</div>
+    <div class="rate-card__meta">מורה פרטית · חיפה</div>
+    <div class="rate-card__prompt">איך היה השירות?</div>
+    <div class="stars">
+      <span class="star"><i class="fa-solid fa-star"></i></span>
+      <span class="star"><i class="fa-solid fa-star"></i></span>
+      <span class="star"><i class="fa-solid fa-star"></i></span>
+      <span class="star star--selected"><i class="fa-solid fa-star"></i></span>
+      <span class="star"><i class="fa-solid fa-star"></i></span>
+    </div>
+    <textarea class="rate-card__textarea" placeholder="ספר על החוויה שלך (אופציונלי)..."></textarea>
+    <a href="feed.html" class="submit-btn">שלח ביקורת</a>
+  </div>
+</div>
+
+</body>
+</html>

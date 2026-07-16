@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LocalFind — פרופיל</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --color-primary: #1D9E75; --color-primary-light: #E1F5EE; --color-primary-dark: #085041;
+  --color-primary-medium: #0F6E56; --color-primary-border: #9FE1CB;
+  --purple: #534AB7; --purple-lt: #EEEDFE;
+  --red: #A32D2D; --red-lt: #FCEBEB; --red-br: #F09595;
+  --color-background: #F5F5F2; --color-border: rgba(0,0,0,0.09);
+  --color-text-secondary: #6B6B67; --color-placeholder: #B0AEA8;
+  --color-text-main: #1A1A18; --font-family: 'Rubik', sans-serif;
+  --font-family-en: 'Inter', sans-serif;
+  --border-radius-small: 8px; --border-radius-large: 16px;
+}
+body { font-family: var(--font-family); background: var(--color-background); color: var(--color-text-main); direction: rtl; min-height: 100vh; }
+.navbar { background: #fff; border-bottom: 0.5px solid var(--color-border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+.navbar__logo { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: var(--color-text-main); text-decoration: none; }
+.navbar__logo-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 14px; }
+.navbar__links { display: flex; gap: 2px; }
+.navbar__link { padding: 6px 10px; border-radius: var(--border-radius-small); font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-decoration: none; }
+.navbar__link--active { background: var(--color-primary-light); color: var(--color-primary-dark); font-weight: 600; }
+.navbar__avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--purple-lt); color: var(--purple); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
+.page { max-width: 440px; margin: 0 auto; padding: 20px 16px 32px; }
+.avatar-section { text-align: center; margin-bottom: 20px; }
+.avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--purple-lt); color: var(--purple); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; margin: 0 auto 10px; }
+.avatar-name { font-size: 17px; font-weight: 600; }
+.card { background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-large); padding: 16px; margin-bottom: 12px; }
+.card__title { font-size: 14px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 0.5px solid var(--color-border); }
+.field { margin-bottom: 14px; }
+.field:last-child { margin-bottom: 0; }
+.field__label { display: block; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 5px; }
+.field__input { width: 100%; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-small); padding: 10px 12px; font-size: 14px; font-family: var(--font-family); background: #FAFAF8; color: var(--color-text-main); }
+.field__input--ltr { direction: ltr; text-align: right; }
+.field__input::placeholder { color: var(--color-placeholder); }
+.save-btn { display: block; width: 100%; padding: 13px; background: var(--color-primary); color: #fff; border-radius: var(--border-radius-small); font-size: 15px; font-weight: 600; text-align: center; text-decoration: none; margin-bottom: 10px; }
+.delete-btn { display: block; width: 100%; padding: 11px; border: 0.5px solid var(--red-br); border-radius: var(--border-radius-small); font-size: 14px; font-weight: 500; color: var(--red); text-align: center; text-decoration: none; }
+@media (max-width: 640px) { .page { padding: 12px 12px 24px; } .navbar__link { padding: 5px 7px; font-size: 11px; } }
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a href="index.html" class="navbar__logo">
+    <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+    LocalFind
+  </a>
+  <div class="navbar__links">
+    <a href="feed.html" class="navbar__link"><i class="fa-solid fa-house"></i> בית</a>
+    <a href="edit_profile_user.html" class="navbar__link navbar__link--active"><i class="fa-solid fa-user"></i> פרופיל</a>
+  </div>
+  <div class="navbar__avatar">יי</div>
+</nav>
+<div class="page">
+  <div class="avatar-section">
+    <div class="avatar">יי</div>
+    <div class="avatar-name">ישראל ישראלי</div>
+  </div>
+  <div class="card">
+    <div class="card__title">פרטים אישיים</div>
+    <div class="field">
+      <label class="field__label">שם מלא</label>
+      <input class="field__input" type="text" value="ישראל ישראלי"/>
+    </div>
+    <div class="field">
+      <label class="field__label">אימייל</label>
+      <input class="field__input field__input--ltr" type="email" value="israel@example.com"/>
+    </div>
+    <div class="field">
+      <label class="field__label">טלפון</label>
+      <input class="field__input field__input--ltr" type="tel" placeholder="050-0000000"/>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card__title">שינוי סיסמה</div>
+    <div class="field">
+      <label class="field__label">סיסמה נוכחית</label>
+      <input class="field__input" type="password" placeholder="••••••••"/>
+    </div>
+    <div class="field">
+      <label class="field__label">סיסמה חדשה</label>
+      <input class="field__input" type="password" placeholder="לפחות 6 תווים"/>
+    </div>
+  </div>
+  <a href="#" class="save-btn">שמור שינויים</a>
+  <a href="#" class="delete-btn">מחק חשבון</a>
+</div>
+</body>
+</html>

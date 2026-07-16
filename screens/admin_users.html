@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LocalFind — ניהול משתמשים</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --color-primary:     #1D9E75;
+  --color-primary-light:  #E1F5EE;
+  --color-primary-dark:  #085041;
+  --color-primary-medium:  #0F6E56;
+  --color-primary-border:  #9FE1CB;
+  --purple:    #534AB7;
+  --purple-lt: #EEEDFE;
+  --purple-dk: #3C3489;
+  --amber-lt:  #FAEEDA;
+  --amber-dk:  #633806;
+  --red:       #A32D2D;
+  --red-lt:    #FCEBEB;
+  --red-br:    #F09595;
+  --color-background:   #F5F5F2;
+  --color-border:  rgba(0,0,0,0.09);
+  --color-text-secondary:  #6B6B67;
+  --color-placeholder: #B0AEA8;
+  --color-text-main:       #1A1A18;
+  --font-family:      'Rubik', sans-serif;
+  --border-radius-small: 8px;
+  --border-radius-large: 16px;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-background);
+  color: var(--color-text-main);
+  direction: rtl;
+  min-height: 100vh;
+}
+
+.navbar {
+  background: #fff;
+  border-bottom: 0.5px solid var(--color-border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  text-decoration: none;
+}
+
+.navbar__logo-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.navbar__admin-badge {
+  font-size: 10px;
+  background: var(--red-lt);
+  color: var(--red);
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 0.5px solid var(--red-br);
+  font-weight: 600;
+}
+
+.navbar__admin-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--amber-lt);
+  color: var(--amber-dk);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  min-height: calc(100vh - 54px);
+}
+
+.admin-sidebar {
+  background: #fff;
+  border-left: 0.5px solid var(--color-border);
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: var(--border-radius-small);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+.admin-sidebar__item--active {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.admin-sidebar__spacer { flex: 1; }
+
+.admin-sidebar__logout-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: var(--border-radius-small);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--red);
+  text-decoration: none;
+}
+
+.admin-main { padding: 20px; }
+
+.users-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.users-header__title { font-size: 17px; font-weight: 600; }
+.users-header__count { font-size: 14px; color: var(--color-text-secondary); }
+
+.users-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--border-radius-large);
+  padding: 10px 14px;
+  margin-bottom: 14px;
+}
+
+.users-search-bar__icon { font-size: 17px; color: var(--color-text-secondary); }
+
+.users-search-bar__input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-family: var(--font-family);
+  color: var(--color-placeholder);
+  direction: rtl;
+}
+
+.users-list {
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--border-radius-large);
+  padding: 0 16px;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.user-row:last-child { border-bottom: none; }
+
+.user-row__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.user-row__name  { font-size: 14px; font-weight: 500; }
+.user-row__email { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+
+.user-row__role-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.user-row__role-badge--provider {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.user-row__role-badge--seeker {
+  background: var(--purple-lt);
+  color: var(--purple-dk);
+}
+
+.user-row__join-date {
+  font-size: 11px;
+  color: var(--color-placeholder);
+  margin-right: 8px;
+}
+
+@media (max-width: 640px) {
+  .admin-layout { grid-template-columns: 1fr; }
+  .admin-sidebar { flex-direction: row; overflow-x: auto; border-left: none; border-bottom: 0.5px solid var(--color-border); }
+  .admin-sidebar__spacer { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar__logo">
+    <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+    LocalFind
+    <span class="navbar__admin-badge">Admin</span>
+  </a>
+  <div class="navbar__admin-avatar">אד</div>
+</nav>
+
+<div class="admin-layout">
+
+  <div class="admin-sidebar">
+    <a href="admin_stats.html" class="admin-sidebar__item"><i class="fa-solid fa-chart-bar"></i> סטטיסטיקות</a>
+    <a href="admin_categories.html" class="admin-sidebar__item"><i class="fa-solid fa-tag"></i> קטגוריות</a>
+    <a href="admin_users.html" class="admin-sidebar__item admin-sidebar__item--active"><i class="fa-solid fa-users"></i> משתמשים</a>
+    <div class="admin-sidebar__spacer"></div>
+    <a href="login.html" class="admin-sidebar__logout-link"><i class="fa-solid fa-right-from-bracket"></i> יציאה</a>
+  </div>
+
+  <div class="admin-main">
+
+    <div class="users-header">
+      <h2 class="users-header__title">משתמשים רשומים</h2>
+      <span class="users-header__count">248 סה"כ</span>
+    </div>
+
+    <div class="users-search-bar">
+      <span class="users-search-bar__icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+      <input class="users-search-bar__input" type="text" placeholder="חיפוש לפי שם או אימייל..."/>
+    </div>
+
+    <div class="users-list">
+      <div class="user-row">
+        <div class="user-row__avatar" style="background:var(--color-primary-light);color:var(--color-primary-medium);">ד כ</div>
+        <div style="flex:1;min-width:0;">
+          <div class="user-row__name">דנה כהן</div>
+          <div class="user-row__email">dana@example.com</div>
+        </div>
+        <span class="user-row__role-badge user-row__role-badge--provider">נותן שירות</span>
+        <span class="user-row__join-date">12.01</span>
+      </div>
+      <div class="user-row">
+        <div class="user-row__avatar" style="background:var(--purple-lt);color:var(--purple);">י י</div>
+        <div style="flex:1;min-width:0;">
+          <div class="user-row__name">ישראל ישראלי</div>
+          <div class="user-row__email">israel@example.com</div>
+        </div>
+        <span class="user-row__role-badge user-row__role-badge--seeker">מחפש שירות</span>
+        <span class="user-row__join-date">18.01</span>
+      </div>
+      <div class="user-row">
+        <div class="user-row__avatar" style="background:var(--amber-lt);color:var(--amber-dk);">י ל</div>
+        <div style="flex:1;min-width:0;">
+          <div class="user-row__name">יוסי לוי</div>
+          <div class="user-row__email">yosi@example.com</div>
+        </div>
+        <span class="user-row__role-badge user-row__role-badge--provider">נותן שירות</span>
+        <span class="user-row__join-date">22.01</span>
+      </div>
+      <div class="user-row">
+        <div class="user-row__avatar" style="background:#FAECE7;color:#712B13;">מ ש</div>
+        <div style="flex:1;min-width:0;">
+          <div class="user-row__name">מלי שמיר</div>
+          <div class="user-row__email">meli@example.com</div>
+        </div>
+        <span class="user-row__role-badge user-row__role-badge--seeker">מחפש שירות</span>
+        <span class="user-row__join-date">03.02</span>
+      </div>
+      <div class="user-row">
+        <div class="user-row__avatar" style="background:var(--color-primary-light);color:var(--color-primary-medium);">מ א</div>
+        <div style="flex:1;min-width:0;">
+          <div class="user-row__name">מיכל אברהם</div>
+          <div class="user-row__email">michal@example.com</div>
+        </div>
+        <span class="user-row__role-badge user-row__role-badge--provider">נותן שירות</span>
+        <span class="user-row__join-date">07.02</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LocalFind — ניהול קטגוריות</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --color-primary:     #1D9E75;
+  --color-primary-light:  #E1F5EE;
+  --color-primary-dark:  #085041;
+  --color-primary-medium:  #0F6E56;
+  --color-primary-border:  #9FE1CB;
+  --red:       #A32D2D;
+  --red-lt:    #FCEBEB;
+  --red-br:    #F09595;
+  --color-background:   #F5F5F2;
+  --color-border:  rgba(0,0,0,0.09);
+  --color-text-secondary:  #6B6B67;
+  --color-placeholder: #B0AEA8;
+  --amber-lt:  #FAEEDA;
+  --amber-dk:  #633806;
+  --color-text-main:       #1A1A18;
+  --font-family:      'Rubik', sans-serif;
+  --border-radius-small: 8px;
+  --border-radius-large: 16px;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-background);
+  color: var(--color-text-main);
+  direction: rtl;
+  min-height: 100vh;
+}
+
+.navbar {
+  background: #fff;
+  border-bottom: 0.5px solid var(--color-border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  text-decoration: none;
+}
+
+.navbar__logo-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.navbar__admin-badge {
+  font-size: 10px;
+  background: var(--red-lt);
+  color: var(--red);
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 0.5px solid var(--red-br);
+  font-weight: 600;
+}
+
+.navbar__admin-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--amber-lt);
+  color: var(--amber-dk);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  min-height: calc(100vh - 54px);
+}
+
+.admin-sidebar {
+  background: #fff;
+  border-left: 0.5px solid var(--color-border);
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: var(--border-radius-small);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+.admin-sidebar__item--active {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.admin-sidebar__spacer { flex: 1; }
+
+.admin-sidebar__logout-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: var(--border-radius-small);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--red);
+  text-decoration: none;
+}
+
+.admin-main { padding: 20px; }
+
+.categories-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.categories-header__title { font-size: 17px; font-weight: 600; }
+
+.add-category-btn {
+  font-size: 13px;
+  padding: 6px 14px;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.categories-list {
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--border-radius-large);
+  padding: 0 16px;
+}
+
+.category-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.category-row:last-child { border-bottom: none; }
+
+.category-row__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--color-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.category-row__name  { font-size: 14px; font-weight: 500; flex: 1; }
+.category-row__count { font-size: 13px; color: var(--color-text-secondary); margin-left: 8px; }
+
+.category-row__delete-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  background: var(--red-lt);
+  border: 0.5px solid var(--red-br);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .admin-layout { grid-template-columns: 1fr; }
+  .admin-sidebar { flex-direction: row; overflow-x: auto; border-left: none; border-bottom: 0.5px solid var(--color-border); }
+  .admin-sidebar__spacer { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="navbar__logo">
+    <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+    LocalFind
+    <span class="navbar__admin-badge">Admin</span>
+  </a>
+  <div class="navbar__admin-avatar">אד</div>
+</nav>
+
+<div class="admin-layout">
+
+  <div class="admin-sidebar">
+    <a href="admin_stats.html" class="admin-sidebar__item"><i class="fa-solid fa-chart-bar"></i> סטטיסטיקות</a>
+    <a href="admin_categories.html" class="admin-sidebar__item admin-sidebar__item--active"><i class="fa-solid fa-tag"></i> קטגוריות</a>
+    <a href="admin_users.html" class="admin-sidebar__item"><i class="fa-solid fa-users"></i> משתמשים</a>
+    <div class="admin-sidebar__spacer"></div>
+    <a href="login.html" class="admin-sidebar__logout-link"><i class="fa-solid fa-right-from-bracket"></i> יציאה</a>
+  </div>
+
+  <div class="admin-main">
+
+    <div class="categories-header">
+      <h2 class="categories-header__title">קטגוריות פעילות</h2>
+      <a href="#" class="add-category-btn">+ הוסף קטגוריה</a>
+    </div>
+
+    <div class="categories-list">
+      <div class="category-row">
+        <div class="category-row__icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+        <span class="category-row__name">שיפוצים</span>
+        <span class="category-row__count">18 נותנים</span>
+        <a href="#" class="category-row__delete-btn"><i class="fa-solid fa-trash"></i></a>
+      </div>
+      <div class="category-row">
+        <div class="category-row__icon"><i class="fa-solid fa-book"></i></div>
+        <span class="category-row__name">הוראה</span>
+        <span class="category-row__count">11 נותנים</span>
+        <a href="#" class="category-row__delete-btn"><i class="fa-solid fa-trash"></i></a>
+      </div>
+      <div class="category-row">
+        <div class="category-row__icon"><i class="fa-solid fa-dumbbell"></i></div>
+        <span class="category-row__name">כושר</span>
+        <span class="category-row__count">9 נותנים</span>
+        <a href="#" class="category-row__delete-btn"><i class="fa-solid fa-trash"></i></a>
+      </div>
+      <div class="category-row">
+        <div class="category-row__icon"><i class="fa-solid fa-camera"></i></div>
+        <span class="category-row__name">צילום</span>
+        <span class="category-row__count">7 נותנים</span>
+        <a href="#" class="category-row__delete-btn"><i class="fa-solid fa-trash"></i></a>
+      </div>
+      <div class="category-row">
+        <div class="category-row__icon"><i class="fa-solid fa-house"></i></div>
+        <span class="category-row__name">ניקיון</span>
+        <span class="category-row__count">5 נותנים</span>
+        <a href="#" class="category-row__delete-btn"><i class="fa-solid fa-trash"></i></a>
+      </div>
+      <div class="category-row">
+        <div class="category-row__icon"><i class="fa-solid fa-baby"></i></div>
+        <span class="category-row__name">ביביסיטר</span>
+        <span class="category-row__count">4 נותנים</span>
+        <a href="#" class="category-row__delete-btn"><i class="fa-solid fa-trash"></i></a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

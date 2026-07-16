@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LocalFind — שמורים</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --color-primary: #1D9E75; --color-primary-light: #E1F5EE; --color-primary-dark: #085041;
+  --color-primary-medium: #0F6E56; --color-primary-border: #9FE1CB;
+  --amber: #BA7517; --amber-lt: #FAEEDA; --amber-dk: #633806;
+  --purple: #534AB7; --purple-lt: #EEEDFE;
+  --red: #A32D2D; --red-lt: #FCEBEB; --red-br: #F09595;
+  --color-background: #F5F5F2; --color-border: rgba(0,0,0,0.09);
+  --color-text-secondary: #6B6B67; --color-text-main: #1A1A18;
+  --font-family: 'Rubik', sans-serif;
+  --font-family-en: 'Inter', sans-serif; --border-radius-small: 8px; --border-radius-large: 16px;
+}
+body { font-family: var(--font-family); background: var(--color-background); color: var(--color-text-main); direction: rtl; min-height: 100vh; }
+.navbar { background: #fff; border-bottom: 0.5px solid var(--color-border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+.navbar__logo { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; color: var(--color-text-main); text-decoration: none; }
+.navbar__logo-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--color-primary-light); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 14px; }
+.navbar__links { display: flex; gap: 2px; }
+.navbar__link { padding: 6px 10px; border-radius: var(--border-radius-small); font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-decoration: none; }
+.navbar__link--active { background: var(--color-primary-light); color: var(--color-primary-dark); font-weight: 600; }
+.navbar__avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--purple-lt); color: var(--purple); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; }
+.page { max-width: 520px; margin: 0 auto; padding: 16px; }
+.page-title { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+.page-sub { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 16px; }
+.card { background: #fff; border: 0.5px solid var(--color-border); border-radius: var(--border-radius-large); padding: 12px; display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.card__avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; flex-shrink: 0; }
+.card__name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+.card__meta { font-size: 13px; color: var(--color-text-secondary); }
+.card__rating { font-size: 13px; font-weight: 600; color: var(--amber); }
+.card__actions { display: flex; gap: 6px; flex-shrink: 0; }
+.card__wa { width: 34px; height: 34px; border-radius: 50%; background: #25D366; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; text-decoration: none; }
+.card__tel { width: 34px; height: 34px; border-radius: 50%; background: var(--color-primary-light); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 15px; text-decoration: none; }
+.card__remove { width: 34px; height: 34px; border-radius: 50%; background: var(--red-lt); border: 0.5px solid var(--red-br); color: var(--red); display: flex; align-items: center; justify-content: center; font-size: 14px; text-decoration: none; }
+.card__details { font-size: 11px; color: var(--color-primary-medium); border: 0.5px solid var(--color-primary-border); border-radius: 20px; padding: 4px 10px; text-decoration: none; font-weight: 600; white-space: nowrap; }
+.card__review { font-size: 11px; color: var(--color-text-secondary); border: 0.5px solid var(--color-border); border-radius: 20px; padding: 4px 10px; text-decoration: none; white-space: nowrap; }
+.card__links { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
+@media (max-width: 640px) { .page { padding: 12px; } .navbar__link { padding: 5px 7px; font-size: 11px; } }
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a href="index.html" class="navbar__logo">
+    <div class="navbar__logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+    LocalFind
+  </a>
+  <div class="navbar__links">
+    <a href="feed.html" class="navbar__link"><i class="fa-solid fa-house"></i> בית</a>
+    <a href="favorites.html" class="navbar__link navbar__link--active"><i class="fa-solid fa-star"></i> שמורים</a>
+    <a href="edit_profile_user.html" class="navbar__link"><i class="fa-solid fa-user"></i> פרופיל</a>
+  </div>
+  <div class="navbar__avatar">יי</div>
+</nav>
+<div class="page">
+  <div class="page-title">שמורים</div>
+  <div class="page-sub">3 אנשי קשר שמורים</div>
+
+  <div class="card">
+    <div class="card__avatar" style="background:var(--color-primary-light);color:var(--color-primary-medium);">ד כ</div>
+    <div style="flex:1;min-width:0;">
+      <div class="card__name">דנה כהן</div>
+      <div class="card__meta"><i class="fa-solid fa-book"></i> מורה · 0.8 ק"מ · <span class="card__rating"><i class="fa-solid fa-star"></i> 4.9</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+      <div class="card__actions">
+        <a href="https://wa.me/972500000000" class="card__wa"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="tel:0500000000" class="card__tel"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="card__remove"><i class="fa-solid fa-trash"></i></a>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <a href="provider_details.html" class="card__details">פרטים</a>
+        <a href="reviews.html" class="card__review">כתוב ביקורת</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card__avatar" style="background:var(--amber-lt);color:var(--amber-dk);">י ל</div>
+    <div style="flex:1;min-width:0;">
+      <div class="card__name">יוסי לוי</div>
+      <div class="card__meta"><i class="fa-solid fa-screwdriver-wrench"></i> שיפוצניק · 1.4 ק"מ · <span class="card__rating"><i class="fa-solid fa-star"></i> 4.7</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+      <div class="card__actions">
+        <a href="https://wa.me/972500000000" class="card__wa"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="tel:0500000000" class="card__tel"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="card__remove"><i class="fa-solid fa-trash"></i></a>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <a href="provider_details.html" class="card__details">פרטים</a>
+        <a href="reviews.html" class="card__review">כתוב ביקורת</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card__avatar" style="background:var(--purple-lt);color:var(--purple);">מ א</div>
+    <div style="flex:1;min-width:0;">
+      <div class="card__name">מיכל אברהם</div>
+      <div class="card__meta"><i class="fa-solid fa-camera"></i> צלמת · 2.1 ק"מ · <span class="card__rating"><i class="fa-solid fa-star"></i> 4.8</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+      <div class="card__actions">
+        <a href="https://wa.me/972500000000" class="card__wa"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="tel:0500000000" class="card__tel"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="card__remove"><i class="fa-solid fa-trash"></i></a>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <a href="provider_details.html" class="card__details">פרטים</a>
+        <a href="reviews.html" class="card__review">כתוב ביקורת</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
