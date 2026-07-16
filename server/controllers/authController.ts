@@ -15,8 +15,8 @@ const generateToken = (id: string) => {
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { name, email, password } = req.body;
-    const user = await User.create({ name, email, password });
+    const { name, email, password, role } = req.body;
+    const user = await User.create({ name, email, password, role });
     const token = generateToken((user._id as any).toString());
 
     res.status(201).json({ success: true, token });
