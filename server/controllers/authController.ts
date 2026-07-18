@@ -56,6 +56,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 export const googleSignin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const credential = req.body.credential;
+    const role = req.body.role;
 
     const ticket = await client.verifyIdToken({
       idToken: credential,
@@ -73,6 +74,7 @@ export const googleSignin = async (req: Request, res: Response, next: NextFuncti
         email: email,
         imgUrl: payload?.picture,
         password: "google-signin",
+        role: role || "user",
       });
     }
 
