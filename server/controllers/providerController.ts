@@ -36,7 +36,7 @@ export const getProviders = async (req: Request, res: Response, next: NextFuncti
     }
 
     const providers = await Provider.find(filter)
-      .populate("user", "name email")
+      .populate("user", "name email phone")
       .populate("category", "name icon")
       .sort("-rating");
 
@@ -54,7 +54,7 @@ export const getProviders = async (req: Request, res: Response, next: NextFuncti
 export const getProviderById = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const provider = await Provider.findById(req.params.id)
-      .populate("user", "name email")
+      .populate("user", "name email phone")
       .populate("category", "name icon");
 
     if (!provider) {
