@@ -64,7 +64,7 @@ If nothing matches, pick the closest one.`,
     }
 
     const providers = await Provider.find(filter)
-      .populate("user", "name email")
+      .populate("user", "name email phone")
       .populate("category", "name icon")
       .sort("-rating");
 
