@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import ServiceRequest from "../models/Request";
-
+import Provider from "../models/Provider";
 export const createRequest = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const reqUser = (req as any).user;
@@ -20,7 +20,16 @@ export const createRequest = async (req: Request, res: Response, next: NextFunct
 
 export const getRequestsByProvider = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const reqUser = (req as any).user;
+    const userId = (req as any).user.id;
+
+    const provider = await Provider.findById(req.params.providerId);
+    if (!provider) {
+      return res.status(404).json({ message: "Provider not found" });
+    }
+
+    if (provider.user.toString() !== userId) {
+      return res.status(403).json({ message: "Not authorized to view these requests" });
+    }
 
     const requests = await ServiceRequest.find({ provider: req.params.providerId })
       .populate("user", "name phone imgUrl")
@@ -35,7 +44,6 @@ export const getRequestsByProvider = async (req: Request, res: Response, next: N
     next(error);
   }
 };
-
 export const updateRequestStatus = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const request = await ServiceRequest.findByIdAndUpdate(
