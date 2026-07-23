@@ -5,10 +5,14 @@ export const getFavorites = async (req: Request, res: Response, next: NextFuncti
   try {
     const reqUser = (req as any).user;
 
-    const user = await User.findById(reqUser.id).populate(
-      "favorites",
-      "description price city rating reviewCount category"
-    );
+    const user = await User.findById(reqUser.id).populate({
+      path: "favorites",
+      select: "description price city rating reviewCount location",
+      populate: [
+        { path: "user", select: "name phone" },
+        { path: "category", select: "name icon" },
+      ],
+    });
 
     res.status(200).json({ success: true, data: user?.favorites });
   } catch (error) {
