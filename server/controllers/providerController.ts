@@ -196,3 +196,21 @@ If nothing matches, pick the closest one.`,
     next(error);
   }
 };
+// GET /api/providers/profile
+export const getMyProviderProfile = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = (req as any).user.id;
+
+    const provider = await Provider.findOne({ user: userId })
+      .populate("user", "name email phone")
+      .populate("category", "name icon");
+
+    if (!provider) {
+      return res.status(404).json({ message: "No provider profile for this user" });
+    }
+
+    res.status(200).json({ success: true, data: provider });
+  } catch (error) {
+    next(error);
+  }
+};
