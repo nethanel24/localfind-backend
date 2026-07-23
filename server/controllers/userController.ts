@@ -21,11 +21,11 @@ export const getProfile = async (req: Request, res: Response, next: NextFunction
 export const updateProfile = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const reqUser = (req as any).user;
-    const { name, email, phone } = req.body;
+    const { name, email, phone, imgUrl } = req.body;
 
     const user = await User.findByIdAndUpdate(
       reqUser.id,
-      { name, email, phone },
+      { name, email, phone, imgUrl },
       { new: true, runValidators: true }
     );
 
