@@ -50,7 +50,10 @@ export const deleteCategory = async (req: Request, res: Response, next: NextFunc
     if (!category) {
       return res.status(404).json({ message: "Category not found" });
     }
-
+    const providerCount = await Provider.countDocuments({ category: req.params.id });
+    if (providerCount > 0) {
+      return res.status(400).json({ message: "Cannot delete a category that has providers" });
+    }
     await Category.findByIdAndDelete(req.params.id);
 
     res.status(204).json({ success: true, data: {} });
